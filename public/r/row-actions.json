@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "row-actions",
+  "type": "registry:component",
+  "title": "RIS component: row-actions",
+  "dependencies": [
+    "lucide-react@^1.61.0",
+    "react-router@^7.1.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/alert-dialog.json",
+    "http://localhost:4300/r/button.json",
+    "http://localhost:4300/r/dropdown-menu.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/RowActions.tsx",
+      "content": "import { useState, type ReactNode } from \"react\";\r\nimport { Link } from \"react-router\";\r\nimport { MoreHorizontal } from \"lucide-react\";\r\nimport { Button } from \"@/components/ui/button\";\r\nimport { ConfirmDialog } from \"@/components/ui/alert-dialog\";\r\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\";\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface RowActionConfirm {\r\n  title: ReactNode;\r\n  description?: ReactNode;\r\n  confirmLabel?: string;\r\n  onConfirm: () => void | Promise<unknown>;\r\n}\r\n\r\nexport interface RowAction {\r\n  key: string;\r\n  label: string;\r\n  icon?: ReactNode;\r\n  onSelect?: () => void;\r\n  to?: string;\r\n  confirm?: RowActionConfirm;\r\n  destructive?: boolean;\r\n  variant?: \"default\" | \"outline\" | \"ghost\";\r\n  disabled?: boolean;\r\n}\r\n\r\nconst MAX_INLINE = 2;\r\n\r\nexport function RowActions({ label, actions, className }: { label: string; actions: (RowAction | false | null | undefined)[]; className?: string }) {\r\n  const items = actions.filter(Boolean) as RowAction[];\r\n  const [confirming, setConfirming] = useState<RowAction | null>(null);\r\n  if (items.length === 0) return null;\r\n\r\n  const run = (a: RowAction) => {\r\n    if (a.confirm) setConfirming(a);\r\n    else a.onSelect?.();\r\n  };\r\n\r\n  const dialog = (\r\n    <ConfirmDialog\r\n      open={confirming !== null}\r\n      onOpenChange={(open) => !open && setConfirming(null)}\r\n      title={confirming?.confirm?.title}\r\n      description={confirming?.confirm?.description}\r\n      confirmLabel={confirming?.confirm?.confirmLabel ?? confirming?.label}\r\n      variant={confirming?.destructive ? \"destructive\" : \"default\"}\r\n      onConfirm={() => confirming?.confirm?.onConfirm()}\r\n    />\r\n  );\r\n\r\n// Table rows are generally clickable: prevent clicks within the action column from triggering the opening of row details.\r\n  const stop = { onClick: (e: React.MouseEvent) => e.stopPropagation(), onKeyDown: (e: React.KeyboardEvent) => e.stopPropagation() };\r\n\r\n  if (items.length <= MAX_INLINE) {\r\n    return (\r\n      <div className={cn(\"flex items-center justify-end gap-1\", className)} {...stop}>\r\n        {items.map((a) => {\r\n          const look = cn(a.destructive && a.variant !== \"default\" && \"text-destructive hover:text-destructive\");\r\n          return a.to ? (\r\n            <Button key={a.key} asChild size=\"sm\" variant={a.variant ?? \"ghost\"} className={look}>\r\n              <Link to={a.to}>\r\n                {a.icon}\r\n                {a.label}\r\n              </Link>\r\n            </Button>\r\n          ) : (\r\n            <Button key={a.key} type=\"button\" size=\"sm\" variant={a.variant ?? \"ghost\"} className={look} disabled={a.disabled} onClick={() => run(a)}>\r\n              {a.icon}\r\n              {a.label}\r\n            </Button>\r\n          );\r\n        })}\r\n        {dialog}\r\n      </div>\r\n    );\r\n  }\r\n\r\n  return (\r\n    <div className={cn(\"flex justify-end\", className)} {...stop}>\r\n      <DropdownMenu>\r\n        <DropdownMenuTrigger asChild>\r\n          <Button type=\"button\" variant=\"ghost\" size=\"icon\" aria-label={`Thao tác với ${label}`} title=\"Thao tác\">\r\n            <MoreHorizontal />\r\n          </Button>\r\n        </DropdownMenuTrigger>\r\n        <DropdownMenuContent align=\"end\">\r\n          {items.map((a) =>\r\n            a.to ? (\r\n              <DropdownMenuItem key={a.key} asChild disabled={a.disabled}>\r\n                <Link to={a.to}>\r\n                  {a.icon}\r\n                  {a.label}\r\n                </Link>\r\n              </DropdownMenuItem>\r\n            ) : (\r\n              <DropdownMenuItem key={a.key} variant={a.destructive ? \"destructive\" : \"default\"} disabled={a.disabled} onSelect={() => run(a)}>\r\n                {a.icon}\r\n                {a.label}\r\n              </DropdownMenuItem>\r\n            ),\r\n          )}\r\n        </DropdownMenuContent>\r\n      </DropdownMenu>\r\n      {dialog}\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/RowActions.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

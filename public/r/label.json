@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "UI component: label",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/label.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · label\r\nimport * as React from \"react\"\r\nimport { Label as LabelPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/**\r\n * Nhãn trường (reference `do-f-nhan`: 12.5px / 600 / ink). Dấu sao bắt buộc là `<em className=\"bb\">*</em>`\r\n * hoặc dùng `required` để tự thêm dấu sao đỏ.\r\n */\r\nexport function Label({ className, children, required, ...props }: React.ComponentProps<typeof LabelPrimitive.Root> & {\r\n  /** Thêm dấu sao đỏ sau nhãn (chỉ hiển thị, không đặt thuộc tính required lên điều khiển). */\r\n  required?: boolean\r\n}) {\r\n  return (\r\n    <LabelPrimitive.Root\r\n      data-slot=\"label\"\r\n      className={cn(\"block text-small leading-[1.4] font-semibold text-foreground select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50 [&_.bb]:ml-[3px] [&_.bb]:text-destructive [&_.bb]:not-italic\", className)}\r\n      {...props}\r\n    >\r\n      {children}\r\n      {required && <em aria-hidden className=\"bb\">*</em>}\r\n    </LabelPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/label.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

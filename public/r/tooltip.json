@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "UI component: tooltip",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · tooltip\r\nimport * as React from \"react\"\r\nimport { Tooltip as TooltipPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport const TooltipProvider = TooltipPrimitive.Provider\r\nexport const Tooltip = TooltipPrimitive.Root\r\nexport const TooltipTrigger = TooltipPrimitive.Trigger\r\n\r\n/* Reference `do-f-tip-noi`: ink fill, white 12px/1.45 text, padding 8/12, radius 6, max-width 280, shadow-s2. */\r\nexport function TooltipContent({ className, sideOffset = 6, ...props }: React.ComponentProps<typeof TooltipPrimitive.Content>) {\r\n  return (\r\n    <TooltipPrimitive.Portal>\r\n      <TooltipPrimitive.Content\r\n        sideOffset={sideOffset}\r\n        className={cn(\"z-tooltip max-w-[280px] rounded-md bg-foreground px-3 py-2 text-xs leading-[1.45] [overflow-wrap:anywhere] text-background shadow-[0_3px_12px_#101c2c1a,0_1px_3px_#101c2c12] anim-popup\", className)}\r\n        {...props}\r\n      />\r\n    </TooltipPrimitive.Portal>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

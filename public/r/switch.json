@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "UI component: switch",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/switch.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · switch\r\nimport * as React from \"react\"\r\nimport { Switch as SwitchPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/*\r\n * 1:1 with the reference `do-switch .pill`: 34x18 pill, line-coloured track (checked = primary), 14px white thumb with a\r\n * 1px shadow sliding 2px -> 18px, focus = 3px ring (primary @ 12%), disabled keeps the look but stops pointer.\r\n */\r\nexport function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {\r\n  return (\r\n    <SwitchPrimitive.Root\r\n      data-slot=\"switch\"\r\n      className={cn(\r\n        \"peer relative inline-flex h-[18px] w-[34px] shrink-0 cursor-pointer items-center rounded-full border-0 bg-input p-0 transition-[background-color,box-shadow] duration-[120ms] outline-none after:absolute after:-inset-x-1 after:-inset-y-3 after:content-[''] md:after:-inset-y-1.5 focus-visible:shadow-focus disabled:cursor-default disabled:opacity-55 data-[state=checked]:bg-primary\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    >\r\n      <SwitchPrimitive.Thumb className=\"pointer-events-none block size-3.5 translate-x-0.5 rounded-full bg-background shadow-[0_1px_2px_#101c2c12] transition-transform duration-[120ms] data-[state=checked]:translate-x-[18px]\" />\r\n    </SwitchPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/switch.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

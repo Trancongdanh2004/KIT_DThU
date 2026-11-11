@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "loading-overlay",
+  "type": "registry:ui",
+  "title": "UI component: loading-overlay",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/loading-overlay.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · loading-overlay\r\nimport * as React from \"react\"\r\nimport { LoaderCircle } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport interface LoadingOverlayProps extends React.ComponentProps<\"div\"> {\r\n  /** Đang tải: hiện lớp phủ và đặt `aria-busy`. Mặc định `true`. */\r\n  loading?: boolean\r\n  /** Thông báo dưới biểu tượng quay. @default Đang tải... */\r\n  message?: React.ReactNode\r\n}\r\n\r\n/**\r\n * Bọc một vùng nội dung; khi `loading` sẽ phủ mờ vùng đó kèm spinner và thông báo.\r\n * Nội dung bên dưới bị khóa tương tác (`inert`).\r\n */\r\nexport function LoadingOverlay({ loading = true, message: messageProp, className, children, ...props }: LoadingOverlayProps) {\r\n  const { labels } = useUiConfig()\r\n  const message = messageProp === undefined ? labels.loadingOverlay : messageProp\r\n  return (\r\n    <div data-slot=\"loading-overlay\" aria-busy={loading} className={cn(\"relative\", className)} {...props}>\r\n      <div inert={loading ? true : undefined}>{children}</div>\r\n      {loading && (\r\n        <div role=\"status\" className=\"absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[inherit] bg-background/70 backdrop-blur-[1px]\">\r\n          <LoaderCircle aria-hidden className=\"size-6 animate-spin text-primary motion-reduce:animate-none\" />\r\n          {message && <span className=\"text-sm text-muted-foreground\">{message}</span>}\r\n        </div>\r\n      )}\r\n    </div>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/loading-overlay.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "UI component: card",
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/card.tsx",
+      "content": "import * as React from \"react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/**\r\n * Widget card of the dashboard (`kw--the`): radius 16, 1px hairline border, crisp two-step shadow\r\n * `0 1px 2px #2323380a, 0 2px 8px -2px #2323380f`. Header padding 16px 18px 0, body 14px 18px 18px.\r\n * Ghép với CardHeader, CardTitle, CardDescription, CardContent, CardFooter; nhận mọi thuộc tính của thẻ `div`.\r\n */\r\nexport function Card({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"card\" className={cn(\"flex flex-col rounded-xl border border-border bg-card pb-[18px] text-card-foreground shadow-[0_1px_2px_#2323380a,0_2px_8px_-2px_#2323380f]\", className)} {...props} />\r\n}\r\n/** Title and note sit on one baseline row and wrap (`kw__dau`). */\r\nexport function CardHeader({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"card-header\" className={cn(\"flex flex-wrap items-baseline gap-x-2.5 gap-y-1 px-[18px] pt-4\", className)} {...props} />\r\n}\r\nexport function CardTitle({ className, ...props }: React.ComponentProps<\"h3\">) {\r\n  return <h3 data-slot=\"card-title\" className={cn(\"m-0 text-emph leading-tight font-semibold tracking-[-0.01em]\", className)} {...props} />\r\n}\r\nexport function CardDescription({ className, ...props }: React.ComponentProps<\"p\">) {\r\n  return <p data-slot=\"card-description\" className={cn(\"text-xs text-[color-mix(in_srgb,var(--subtle-foreground)_70%,var(--muted-foreground))]\", className)} {...props} />\r\n}\r\nexport function CardContent({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"card-content\" className={cn(\"px-[18px] pt-3.5\", className)} {...props} />\r\n}\r\nexport function CardFooter({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"card-footer\" className={cn(\"flex items-center px-[18px] pt-3.5\", className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/card.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

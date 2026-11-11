@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "progress",
+  "type": "registry:ui",
+  "title": "UI component: progress",
+  "dependencies": [
+    "class-variance-authority@^0.7.1",
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/progress.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · progress\r\nimport * as React from \"react\"\r\nimport { Progress as ProgressPrimitive } from \"radix-ui\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** `tone` follows the reference `do-tien-do--*` colours: navy (default), xong (success), son (destructive), hophach (warning), xam (grey). */\r\nconst indicatorVariants = cva(\"h-full transition-[width] duration-300\", {\r\n  variants: {\r\n    tone: { primary: \"bg-primary\", success: \"bg-success\", destructive: \"bg-destructive\", warning: \"bg-warning\", muted: \"bg-subtle-foreground\" },\r\n    striped: { true: \"bg-[linear-gradient(45deg,rgba(255,255,255,.22)_25%,transparent_25%,transparent_50%,rgba(255,255,255,.22)_50%,rgba(255,255,255,.22)_75%,transparent_75%)] bg-[length:12px_12px]\", false: \"\" },\r\n  },\r\n  defaultVariants: { tone: \"primary\", striped: false },\r\n})\r\n\r\nexport function Progress({ className, value, tone, striped, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root> & VariantProps<typeof indicatorVariants>) {\r\n  return (\r\n    <ProgressPrimitive.Root className={cn(\"relative h-2 w-full overflow-hidden rounded-full bg-muted\", className)} value={value} {...props}>\r\n      <ProgressPrimitive.Indicator className={indicatorVariants({ tone, striped })} style={{ width: `${value ?? 0}%` }} />\r\n    </ProgressPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/progress.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

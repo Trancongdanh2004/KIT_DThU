@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "iso-date-picker",
+  "type": "registry:component",
+  "title": "RIS component: iso-date-picker",
+  "dependencies": [
+    "date-fns@^4.4.0",
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/button.json",
+    "http://localhost:4300/r/date-picker.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/IsoDatePicker.tsx",
+      "content": "import { format, isValid, parseISO } from \"date-fns\";\r\nimport { X } from \"lucide-react\";\r\nimport { Button } from \"@/components/ui/button\";\r\nimport { DatePicker } from \"@/components/ui/date-picker\";\r\n\r\ninterface IsoDatePickerProps {\r\n  /** Ngày dạng yyyy-MM-dd; \"\" hoặc null = chưa chọn. */\r\n  value: string | null | undefined;\r\n  onChange: (value: string) => void;\r\n  onBlur?: () => void;\r\n  /** Cho xoá ngày đã chọn (ô không bắt buộc). */\r\n  clearable?: boolean;\r\n  disabled?: boolean;\r\n  placeholder?: string;\r\n  \"aria-label\": string;\r\n  className?: string;\r\n}\r\n\r\n/** DatePicker của kit cho form lưu ngày dạng chuỗi yyyy-MM-dd (khớp zIsoDate); chọn xong coi như rời ô. */\r\nexport function IsoDatePicker({ value, onChange, onBlur, clearable, disabled, placeholder, className, ...rest }: IsoDatePickerProps) {\r\n  const parsed = value ? parseISO(value) : undefined;\r\n  const selected = parsed && isValid(parsed) ? parsed : undefined;\r\n  return (\r\n    <div className=\"flex items-center gap-1.5\">\r\n      <DatePicker\r\n        value={selected}\r\n        onChange={(date) => {\r\n          onChange(date ? format(date, \"yyyy-MM-dd\") : \"\");\r\n          onBlur?.();\r\n        }}\r\n        disabled={disabled}\r\n        placeholder={placeholder}\r\n        className={className}\r\n        aria-label={rest[\"aria-label\"]}\r\n      />\r\n      {clearable && selected && !disabled && (\r\n        <Button type=\"button\" variant=\"ghost\" size=\"icon-sm\" aria-label={`Xoá ${rest[\"aria-label\"].toLowerCase()}`} onClick={() => { onChange(\"\"); onBlur?.(); }}>\r\n          <X />\r\n        </Button>\r\n      )}\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/IsoDatePicker.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

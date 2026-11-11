@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "description-list",
+  "type": "registry:ui",
+  "title": "UI component: description-list",
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/description-list.tsx",
+      "content": "import * as React from \"react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport interface DescriptionListProps extends React.ComponentProps<\"dl\"> {\r\n  /** Số cột ở màn hình rộng (mặc định 2). Trên màn hình hẹp luôn 1 cột. */\r\n  columns?: 1 | 2 | 3\r\n  /** `stacked`: nhãn trên giá trị; `inline`: nhãn bên trái, giá trị bên phải. */\r\n  layout?: \"stacked\" | \"inline\"\r\n  /** Kẻ đường phân cách giữa các mục. */\r\n  divided?: boolean\r\n}\r\n\r\nconst colClass = { 1: \"\", 2: \"sm:grid-cols-2\", 3: \"sm:grid-cols-2 lg:grid-cols-3\" } as const\r\n\r\n/** Danh sách mô tả (thẻ `dl`) cho cặp nhãn / giá trị; 1 cột trên điện thoại, 2 cột (hoặc 3) từ màn hình rộng. */\r\nexport function DescriptionList({ columns = 2, layout = \"stacked\", divided = false, className, ...props }: DescriptionListProps) {\r\n  return <dl data-slot=\"description-list\" data-layout={layout} data-divided={divided || undefined} className={cn(\"group/dl grid grid-cols-1 gap-x-8 gap-y-4 text-body\", colClass[columns], className)} {...props} />\r\n}\r\n\r\nexport interface DescriptionItemProps extends Omit<React.ComponentProps<\"div\">, \"title\"> {\r\n  /** Nhãn (thẻ `dt`). */\r\n  term: React.ReactNode\r\n  /** Chiếm hết hàng (mọi cột). */\r\n  span?: boolean\r\n}\r\n\r\n/** Một mục nhãn / giá trị; nội dung `children` là giá trị (thẻ `dd`). */\r\nexport function DescriptionItem({ term, span = false, className, children, ...props }: DescriptionItemProps) {\r\n  return (\r\n    <div\r\n      data-slot=\"description-item\"\r\n      className={cn(\r\n        \"min-w-0 group-data-[divided]/dl:border-b group-data-[divided]/dl:pb-4\",\r\n        \"group-data-[layout=inline]/dl:flex group-data-[layout=inline]/dl:items-baseline group-data-[layout=inline]/dl:gap-4\",\r\n        span && \"sm:col-span-full\", className,\r\n      )}\r\n      {...props}\r\n    >\r\n      <dt className=\"text-muted-foreground group-data-[layout=inline]/dl:w-36 group-data-[layout=inline]/dl:shrink-0\">{term}</dt>\r\n      <dd className=\"mt-0.5 min-w-0 font-medium break-words group-data-[layout=inline]/dl:mt-0\">{children ?? <span className=\"text-muted-foreground\">—</span>}</dd>\r\n    </div>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/description-list.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

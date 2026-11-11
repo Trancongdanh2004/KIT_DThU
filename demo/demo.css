@@ -1,0 +1,5 @@
+@import "../src/styles/app.css";
+
+/* Tailwind only scans the Vite root by default; the kit lives one level up. */
+@source "../src";
+@source "./";

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "title": "UI component: scroll-area",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/scroll-area.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · scroll-area\r\nimport * as React from \"react\"\r\nimport { ScrollArea as ScrollAreaPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** Scrollbar as the reference `dtb-scroll`: 10px track, pill thumb black 12% (22% on hover) with a 2px transparent inset. */\r\nexport function ScrollArea({ className, children, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {\r\n  return (\r\n    <ScrollAreaPrimitive.Root className={cn(\"relative overflow-hidden\", className)} {...props}>\r\n      <ScrollAreaPrimitive.Viewport className=\"size-full rounded-[inherit]\">{children}</ScrollAreaPrimitive.Viewport>\r\n      <ScrollAreaPrimitive.Scrollbar orientation=\"vertical\" className=\"flex w-2.5 touch-none p-0.5 select-none\">\r\n        <ScrollAreaPrimitive.Thumb className=\"relative flex-1 rounded-full bg-black/12 hover:bg-black/22 dark:bg-white/15 dark:hover:bg-white/25\" />\r\n      </ScrollAreaPrimitive.Scrollbar>\r\n    </ScrollAreaPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/scroll-area.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

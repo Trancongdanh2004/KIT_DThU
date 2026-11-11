@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sheet",
+  "type": "registry:ui",
+  "title": "UI component: sheet",
+  "dependencies": [
+    "class-variance-authority@^0.7.1",
+    "lucide-react@^1.61.0",
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/sheet.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · sheet\r\nimport * as React from \"react\"\r\nimport { Dialog as SheetPrimitive } from \"radix-ui\"\r\nimport { X } from \"lucide-react\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\n/** Gốc của ngăn trượt (dựa trên Dialog). Điều khiển bằng `open`/`onOpenChange`. */\r\nexport const Sheet = SheetPrimitive.Root\r\nexport const SheetTrigger = SheetPrimitive.Trigger\r\nexport const SheetClose = SheetPrimitive.Close\r\n\r\n/*\r\n * Side panel = reference `do-keo` (right drawer, 400px): surface, 1px line edge, shadow -12px 0 40px #101c2c29, overlay rgba(16,28,44,.18).\r\n *   header `do-keo-dau`  padding 13 16 12, 1px line-soft underline;  body `do-keo-than` padding 14 16;  close = 24px round ghost button.\r\n * Bottom sheets keep the mobile `do-sheet` look (radius 16 top, overlay .45).\r\n * Direct children that are not header/footer get the body padding unless `p-0` is passed in `className`.\r\n */\r\nconst sheetVariants = cva(\"anim-slide fixed z-overlay flex flex-col gap-0 overflow-x-hidden overflow-y-auto bg-background *:shrink-0 *:min-w-0 p-0 text-body text-foreground outline-none\", {\r\n  variants: {\r\n    side: {\r\n      right: \"anim-slide-right inset-y-0 right-0 h-full w-[min(100%,400px)] border-l border-border shadow-[-12px_0_40px_#101c2c29]\",\r\n      left: \"anim-slide-left inset-y-0 left-0 h-full w-[min(100%,400px)] border-r border-border shadow-[12px_0_40px_#101c2c29]\",\r\n      top: \"anim-slide-top inset-x-0 top-0 max-h-[85dvh] border-b border-border shadow-[0_12px_40px_#101c2c29]\",\r\n      bottom: \"anim-slide-bottom inset-x-0 bottom-0 max-h-[88dvh] rounded-t-2xl shadow-[0_-8px_24px_#101c2c29]\",\r\n    },\r\n  },\r\n  defaultVariants: { side: \"right\" },\r\n})\r\nconst BODY = \"[&>:not([data-slot=sheet-header],[data-slot=sheet-footer],[data-slot=sheet-close])]:px-4 [&>:not([data-slot=sheet-header],[data-slot=sheet-footer],[data-slot=sheet-close])]:py-3.5\"\r\n\r\n/** Nội dung ngăn trượt. `side` chọn cạnh xuất hiện: right (mặc định), left, top, bottom. */\r\nexport function SheetContent({ className, side, children, overlayClassName, hideClose, ...props }: React.ComponentProps<typeof SheetPrimitive.Content> & VariantProps<typeof sheetVariants> & { /** Extra classes for the backdrop (e.g. a blur). */ overlayClassName?: string; /** Hide the built-in close button when the content renders its own. */ hideClose?: boolean }) {\r\n  const flush = /(^|\\s)p-0(\\s|$)/.test(className ?? \"\")\r\n  const bottomOrTop = side === \"bottom\" || side === \"top\"\r\n  const { labels } = useUiConfig()\r\n  return (\r\n    <SheetPrimitive.Portal>\r\n      <SheetPrimitive.Overlay className={cn(\"fixed inset-0 z-overlay anim-fade\", bottomOrTop ? \"bg-[rgba(16,28,44,0.45)]\" : \"bg-[rgba(16,28,44,0.18)]\", overlayClassName)} />\r\n      <SheetPrimitive.Content className={cn(sheetVariants({ side }), !flush && BODY, className)} {...props}>\r\n        {children}\r\n        {!hideClose && <SheetPrimitive.Close data-slot=\"sheet-close\" className=\"absolute top-[15px] right-4 inline-flex size-6 cursor-pointer items-center justify-center rounded-full text-muted-foreground transition-colors duration-[120ms] outline-none hover:bg-secondary hover:text-foreground focus-visible:shadow-focus\">\r\n          <X className=\"size-3.5\" /><span className=\"sr-only\">{labels.close}</span>\r\n        </SheetPrimitive.Close>}\r\n      </SheetPrimitive.Content>\r\n    </SheetPrimitive.Portal>\r\n  )\r\n}\r\nexport function SheetHeader({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"sheet-header\" className={cn(\"flex min-h-[53px] flex-col justify-center gap-0.5 border-b border-[color-mix(in_srgb,var(--border)_55%,var(--background))] pt-[13px] pr-12 pb-3 pl-4\", className)} {...props} />\r\n}\r\nexport function SheetFooter({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"sheet-footer\" className={cn(\"mt-auto flex items-center gap-2 border-t border-[color-mix(in_srgb,var(--border)_55%,var(--background))] bg-background px-4 py-2.5\", className)} {...props} />\r\n}\r\nexport function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) {\r\n  return <SheetPrimitive.Title className={cn(\"text-lead leading-tight font-bold text-foreground\", className)} {...props} />\r\n}\r\nexport function SheetDescription({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>) {\r\n  return <SheetPrimitive.Description className={cn(\"text-xs text-subtle-foreground\", className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/sheet.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "choice-select",
+  "type": "registry:component",
+  "title": "RIS component: choice-select",
+  "registryDependencies": [
+    "http://localhost:4300/r/combobox.json",
+    "http://localhost:4300/r/select.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/choice-select.tsx",
+      "content": "import type * as React from \"react\";\r\nimport { Combobox } from \"@/components/ui/combobox\";\r\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\";\r\n\r\nexport interface ChoiceSelectOption {\r\n  value: string;\r\n  label: string;\r\n  disabled?: boolean;\r\n}\r\n\r\n/** Radix Select không nhận giá trị rỗng cho mục chọn, nên mục \"không chọn\" dùng giá trị này rồi đổi về \"\". */\r\nconst EMPTY = \"__empty__\";\r\n/** Quá ngưỡng này thì chuyển sang Combobox có ô tìm kiếm. */\r\nconst SEARCH_THRESHOLD = 8;\r\n\r\ninterface ChoiceSelectProps {\r\n  options: ChoiceSelectOption[];\r\n  /** Giá trị đang chọn; \"\" hoặc undefined = chưa chọn. */\r\n  value: string | undefined;\r\n  onChange: (value: string) => void;\r\n  placeholder?: string;\r\n  /** Thêm mục đầu danh sách có giá trị \"\" (vd. \"(Không có)\", \"Tất cả\"). */\r\n  emptyLabel?: string;\r\n  /** Ép dùng Combobox tìm kiếm được; mặc định tự bật khi nhiều hơn 8 mục. */\r\n  searchable?: boolean;\r\n  disabled?: boolean;\r\n  id?: string;\r\n  name?: string;\r\n  className?: string;\r\n  \"aria-label\"?: string;\r\n  \"aria-describedby\"?: string;\r\n  \"aria-invalid\"?: boolean;\r\n  onBlur?: () => void;\r\n  /** Ref của nút mở (để RHF focus vào ô lỗi đầu tiên). */\r\n  ref?: React.Ref<HTMLButtonElement>;\r\n}\r\n\r\n/**\r\n * Ô chọn của kit: Select (Radix) cho danh sách ngắn, Combobox cho danh sách dài.\r\n * Gắn trong form RHF qua FormField + FormControl (id, aria-invalid, aria-describedby truyền xuống nút mở).\r\n */\r\nexport function ChoiceSelect({\r\n  options,\r\n  value,\r\n  onChange,\r\n  placeholder,\r\n  emptyLabel,\r\n  searchable,\r\n  disabled,\r\n  id,\r\n  name,\r\n  className,\r\n  onBlur,\r\n  ref,\r\n  ...aria\r\n}: ChoiceSelectProps) {\r\n  if (searchable ?? options.length > SEARCH_THRESHOLD) {\r\n    const all = emptyLabel !== undefined ? [{ value: \"\", label: emptyLabel }, ...options] : options;\r\n    return (\r\n      <Combobox\r\n        options={all}\r\n        value={value ?? \"\"}\r\n        onChange={onChange}\r\n        placeholder={placeholder}\r\n        disabled={disabled}\r\n        id={id}\r\n        className={className}\r\n        aria-label={aria[\"aria-label\"]}\r\n        aria-invalid={aria[\"aria-invalid\"]}\r\n      />\r\n    );\r\n  }\r\n  return (\r\n    <Select\r\n      value={value ? value : emptyLabel !== undefined ? EMPTY : \"\"}\r\n      onValueChange={(v) => onChange(v === EMPTY ? \"\" : v)}\r\n      disabled={disabled}\r\n      name={name}\r\n    >\r\n      <SelectTrigger ref={ref} id={id} className={className} onBlur={onBlur} {...aria}>\r\n        <SelectValue placeholder={placeholder ?? \"Chọn…\"} />\r\n      </SelectTrigger>\r\n      <SelectContent>\r\n        {emptyLabel !== undefined && <SelectItem value={EMPTY}>{emptyLabel}</SelectItem>}\r\n        {options.map((o) => (\r\n          <SelectItem key={o.value} value={o.value} disabled={o.disabled}>\r\n            {o.label}\r\n          </SelectItem>\r\n        ))}\r\n      </SelectContent>\r\n    </Select>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/choice-select.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "combobox",
+  "type": "registry:ui",
+  "title": "UI component: combobox",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/command.json",
+    "http://localhost:4300/r/popover.json",
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/combobox.tsx",
+      "content": "import * as React from \"react\"\r\nimport { ChevronDown } from \"lucide-react\"\r\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\r\nimport { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from \"@/components/ui/command\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport interface ComboboxOption { value: string; label: string }\r\n\r\n/** Searchable single-select. */\r\nexport function Combobox({ options, value, onChange, placeholder, searchPlaceholder, emptyText, className, disabled, loading, id, \"aria-label\": ariaLabel, \"aria-invalid\": ariaInvalid }: {\r\n  /** Danh sách lựa chọn `{ value, label }`. */\r\n  options: ComboboxOption[]\r\n  /** Giá trị đang chọn (điều khiển từ ngoài). */\r\n  value?: string\r\n  /** Gọi khi chọn một mục, trả về `value` của mục đó. */\r\n  onChange?: (v: string) => void\r\n  /** Chữ hiện khi chưa chọn. @default Chọn… */\r\n  placeholder?: string\r\n  /** Chữ gợi ý trong ô tìm kiếm. @default Tìm… */\r\n  searchPlaceholder?: string\r\n  /** Chữ hiện khi không có kết quả tìm kiếm. @default Không có kết quả */\r\n  emptyText?: string\r\n  /** Class bổ sung cho nút mở. */\r\n  className?: string\r\n  /** Vô hiệu hoá. */\r\n  disabled?: boolean\r\n  /** Đang nạp danh sách: hiện \"Đang tải…\" thay cho kết quả rỗng. */\r\n  loading?: boolean\r\n  id?: string\r\n  \"aria-label\"?: string\r\n  \"aria-invalid\"?: boolean\r\n}) {\r\n  const { labels } = useUiConfig()\r\n  const [open, setOpen] = React.useState(false)\r\n  const current = options.find((o) => o.value === value)\r\n  return (\r\n    <Popover open={open} onOpenChange={setOpen}>\r\n      <PopoverTrigger asChild>\r\n        <button\r\n          type=\"button\"\r\n          id={id}\r\n          role=\"combobox\"\r\n          disabled={disabled}\r\n          aria-label={ariaLabel}\r\n          aria-invalid={ariaInvalid}\r\n          aria-busy={loading || undefined}\r\n          aria-expanded={open}\r\n          data-state={open ? \"open\" : \"closed\"}\r\n          className={cn(\r\n            \"group/sel flex h-9 w-full coarse:h-11 coarse:text-base cursor-pointer items-center gap-1.5 rounded-md border border-field-border bg-background pr-1.5 pl-[11px] text-left text-body leading-[22px] text-foreground transition-[color,background-color,border-color,box-shadow] duration-150 ease-out motion-reduce:transition-none outline-none hover:border-muted-foreground focus-visible:border-primary focus-visible:shadow-focus-soft data-[state=open]:border-primary data-[state=open]:shadow-focus-soft disabled:cursor-not-allowed disabled:bg-secondary disabled:text-subtle-foreground aria-invalid:border-destructive aria-invalid:focus-visible:shadow-focus-soft-danger\",\r\n            !current && \"text-subtle-foreground\",\r\n            className,\r\n          )}\r\n        >\r\n          <span className=\"min-w-0 flex-1 truncate\">{current?.label ?? placeholder ?? labels.select}</span>\r\n          <ChevronDown className=\"size-4 shrink-0 text-subtle-foreground transition-transform duration-150 group-data-[state=open]/sel:rotate-180 group-data-[state=open]/sel:text-primary\" />\r\n        </button>\r\n      </PopoverTrigger>\r\n      <PopoverContent align=\"start\" className=\"w-[var(--radix-popover-trigger-width)] min-w-56 p-0\">\r\n        <Command>\r\n          <CommandInput placeholder={searchPlaceholder ?? labels.search} />\r\n          <CommandList>\r\n            <CommandEmpty>{loading ? labels.loading : (emptyText ?? labels.noResults)}</CommandEmpty>\r\n            <CommandGroup>\r\n              {options.map((o) => (\r\n                <CommandItem key={o.value} value={o.label} data-checked={o.value === value} onSelect={() => { onChange?.(o.value); setOpen(false) }}>\r\n                  {o.label}\r\n                </CommandItem>\r\n              ))}\r\n            </CommandGroup>\r\n          </CommandList>\r\n        </Command>\r\n      </PopoverContent>\r\n    </Popover>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/combobox.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

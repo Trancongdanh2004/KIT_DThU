@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "UI component: avatar",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/avatar.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · avatar\r\nimport * as React from \"react\"\r\nimport { Avatar as AvatarPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** Reference `dtb-avatar`: 27px circle. */\r\nexport function Avatar({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Root>) {\r\n  return <AvatarPrimitive.Root data-slot=\"avatar\" className={cn(\"relative flex size-[27px] shrink-0 overflow-hidden rounded-full\", className)} {...props} />\r\n}\r\nexport function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {\r\n  return <AvatarPrimitive.Image data-slot=\"avatar-image\" className={cn(\"aspect-square size-full\", className)} {...props} />\r\n}\r\n/** Initials: 10.5px / 700 uppercase, accent text on accent-soft with a 1px accent-line border (accent-line = primary at 22% over card). */\r\nexport function AvatarFallback({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {\r\n  return <AvatarPrimitive.Fallback data-slot=\"avatar-fallback\" className={cn(\"flex size-full items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--primary)_22%,var(--card))] bg-accent text-tiny leading-none font-bold tracking-normal text-primary uppercase select-none\", className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/avatar.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "type": "registry:ui",
+  "title": "UI component: popover",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/popover.tsx",
+      "content": "import * as React from \"react\"\r\nimport { Popover as PopoverPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport const Popover = PopoverPrimitive.Root\r\nexport const PopoverTrigger = PopoverPrimitive.Trigger\r\nexport const PopoverAnchor = PopoverPrimitive.Anchor\r\n\r\nexport function PopoverContent({ className, align = \"center\", sideOffset = 6, ...props }: React.ComponentProps<typeof PopoverPrimitive.Content>) {\r\n  return (\r\n    <PopoverPrimitive.Portal>\r\n      <PopoverPrimitive.Content\r\n        align={align}\r\n        sideOffset={sideOffset}\r\n        className={cn(\"anim-popup z-overlay w-72 rounded-lg border border-border bg-popover p-4 text-popover-foreground shadow-[0_3px_12px_#101c2c1a,0_1px_3px_#101c2c12] outline-none\", className)}\r\n        {...props}\r\n      />\r\n    </PopoverPrimitive.Portal>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/popover.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

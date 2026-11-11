@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-countdown",
+  "type": "registry:hook",
+  "title": "Hook: use-countdown",
+  "files": [
+    {
+      "path": "lib/use-countdown.ts",
+      "content": "import * as React from \"react\"\r\n\r\n/** Counts down from `seconds` to 0 once per second; `restart()` begins again. Used for resend cool-downs and session warnings. */\r\nexport function useCountdown(seconds: number, autoStart = true) {\r\n  const [left, setLeft] = React.useState(autoStart ? seconds : 0)\r\n  const [epoch, setEpoch] = React.useState(0)\r\n  const running = left > 0\r\n  React.useEffect(() => {\r\n    if (!running) return\r\n    const t = setInterval(() => setLeft((n) => Math.max(0, n - 1)), 1000)\r\n    return () => clearInterval(t)\r\n  }, [running, epoch])\r\n  const restart = React.useCallback((s = seconds) => { setLeft(s); setEpoch((e) => e + 1) }, [seconds])\r\n  return [left, restart] as const\r\n}\r\n",
+      "type": "registry:hook",
+      "target": "lib/use-countdown.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

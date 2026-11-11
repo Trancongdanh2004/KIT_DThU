@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "UI component: textarea",
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/textarea.tsx",
+      "content": "import * as React from \"react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** Ô nhập nhiều dòng; cùng kiểu với `Input` (viền nhạt, hover đậm hơn, focus viền primary + quầng mờ 3px, lỗi đỏ), co giãn theo chiều dọc. */\r\nexport function Textarea({ className, ...props }: React.ComponentProps<\"textarea\">) {\r\n  return (\r\n    <textarea\r\n      data-slot=\"textarea\"\r\n      className={cn(\r\n        \"flex min-h-20 w-full resize-y coarse:text-base rounded-md border border-field-border bg-background px-[11px] py-[7px] text-control leading-relaxed text-foreground shadow-none transition-[color,background-color,border-color,box-shadow] duration-150 ease-out motion-reduce:transition-none outline-none enabled:hover:not-focus-visible:border-input placeholder:text-subtle-foreground focus-visible:border-primary focus-visible:shadow-focus-soft disabled:cursor-default disabled:bg-secondary disabled:text-subtle-foreground aria-invalid:border-destructive aria-invalid:focus-visible:shadow-focus-soft-danger\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/textarea.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

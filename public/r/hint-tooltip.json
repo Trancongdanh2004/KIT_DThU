@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hint-tooltip",
+  "type": "registry:component",
+  "title": "RIS component: hint-tooltip",
+  "registryDependencies": [
+    "http://localhost:4300/r/tooltip.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/HintTooltip.tsx",
+      "content": "import type { ReactNode } from \"react\";\r\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\";\r\n\r\n/**\r\n * Gắn chú thích (tooltip) cho điều khiển có thể bị vô hiệu: nút disabled không nhận sự kiện chuột/bàn phím,\r\n * nên chú thích đặt trên vỏ bọc. `hint` rỗng thì trả nguyên nội dung, không bọc.\r\n */\r\nexport function HintTooltip({ hint, children }: { hint?: string | null; children: ReactNode }) {\r\n  if (!hint) return <>{children}</>;\r\n  return (\r\n    <TooltipProvider delayDuration={150}>\r\n      <Tooltip>\r\n        <TooltipTrigger asChild>\r\n          <span tabIndex={0} className=\"inline-flex rounded-md outline-none focus-visible:shadow-focus\">\r\n            {children}\r\n          </span>\r\n        </TooltipTrigger>\r\n        <TooltipContent>{hint}</TooltipContent>\r\n      </Tooltip>\r\n    </TooltipProvider>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/HintTooltip.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

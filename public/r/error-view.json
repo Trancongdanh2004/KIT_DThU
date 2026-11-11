@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-view",
+  "type": "registry:component",
+  "title": "RIS component: error-view",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/button.json",
+    "http://localhost:4300/r/result.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/ErrorView.tsx",
+      "content": "import { ArrowLeft, House, RefreshCw } from \"lucide-react\";\r\nimport { Button } from \"@/components/ui/button\";\r\nimport { Result } from \"@/components/ui/result\";\r\n\r\nexport interface ErrorViewProps {\r\n  status: \"403\" | \"404\" | \"500\";\r\n  /** Ghi đè tiêu đề mặc định theo mã lỗi (ví dụ 503 \"Hệ thống đang bận\"). */\r\n  title?: string;\r\n  description?: string;\r\n  /** Nhãn nút về trang chủ của khu hiện tại. */\r\n  homeLabel?: string;\r\n  onHome?: () => void;\r\n  onBack?: () => void;\r\n  onRetry?: () => void;\r\n}\r\n\r\nconst TITLES = {\r\n  \"404\": \"Không tìm thấy trang\",\r\n  \"403\": \"Bạn chưa có quyền truy cập\",\r\n  \"500\": \"Hệ thống đang gặp sự cố\",\r\n} as const;\r\n\r\n/**\r\n * Khối lỗi (404/403/500) đặt BÊN TRONG một khung có sẵn (header/footer công khai, shell nội bộ), không chiếm cả trang\r\n * và không tạo <main> lồng nhau. Lỗi toàn trang dùng ErrorPage của blocks/system (xem root.tsx).\r\n */\r\nexport function ErrorView({ status, title, description, homeLabel = \"Về trang chủ\", onHome, onBack, onRetry }: ErrorViewProps) {\r\n  return (\r\n    <Result\r\n      status={status}\r\n      headingLevel={1}\r\n      title={title ?? TITLES[status]}\r\n      subTitle={description}\r\n      className=\"min-h-[50dvh] justify-center\"\r\n      extra={\r\n        <>\r\n          {onHome && (\r\n            <Button onClick={onHome}>\r\n              <House />\r\n              {homeLabel}\r\n            </Button>\r\n          )}\r\n          {status === \"500\" && onRetry && (\r\n            <Button variant=\"outline\" onClick={onRetry}>\r\n              <RefreshCw />\r\n              Thử lại\r\n            </Button>\r\n          )}\r\n          {onBack && (\r\n            <Button variant=\"ghost\" onClick={onBack}>\r\n              <ArrowLeft />\r\n              Quay lại\r\n            </Button>\r\n          )}\r\n        </>\r\n      }\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/ErrorView.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

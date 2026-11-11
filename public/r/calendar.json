@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "calendar",
+  "type": "registry:ui",
+  "title": "UI component: calendar",
+  "dependencies": [
+    "lucide-react@^1.61.0",
+    "react-day-picker@^10.0.2"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/calendar.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · calendar\r\nimport * as React from \"react\"\r\nimport { DayPicker } from \"react-day-picker\"\r\nimport { vi } from \"react-day-picker/locale\"\r\nimport { ChevronDown, ChevronLeft, ChevronRight } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport type CalendarProps = React.ComponentProps<typeof DayPicker>\r\n\r\n/*\r\n * 1:1 with the reference date popup: padding 10, month + year as ghost dropdowns (13px/600, hover surface-3) centred between two 28px\r\n * bordered arrow buttons (50% opacity), weekday names 11.5px ink-faint, 32px day cells at 13px, today = accent fill,\r\n * selected = primary fill / white text, outside days muted, range middle = accent band.\r\n */\r\nexport function Calendar({ className, classNames, showOutsideDays = true, captionLayout = \"dropdown\", startMonth, endMonth, ...props }: CalendarProps) {\r\n  const { locale, labels } = useUiConfig()\r\n  const thisYear = new Date().getFullYear()\r\n  return (\r\n    <DayPicker\r\n      locale={locale.startsWith(\"vi\") ? vi : undefined}\r\n      showOutsideDays={showOutsideDays}\r\n      captionLayout={captionLayout}\r\n      startMonth={startMonth ?? new Date(thisYear - 100, 0)}\r\n      endMonth={endMonth ?? new Date(thisYear + 20, 11)}\r\n      data-slot=\"calendar\"\r\n      className={cn(\"p-2.5\", className)}\r\n      classNames={{\r\n        months: \"relative flex flex-col gap-4 sm:flex-row\",\r\n        month: \"flex flex-col gap-4\",\r\n        month_caption: \"flex h-9 items-center justify-center px-9 text-body font-semibold text-foreground\",\r\n        dropdowns: \"flex items-center justify-center gap-1\",\r\n        dropdown_root: \"relative inline-flex h-9 items-center rounded-md hover:bg-muted has-[select:focus-visible]:bg-muted has-[select:focus-visible]:ring-2 has-[select:focus-visible]:ring-primary/25\",\r\n        dropdown: \"absolute inset-0 cursor-pointer opacity-0\",\r\n        caption_label: \"flex h-9 items-center gap-1 rounded-md pr-2.5 pl-2.5 text-body font-semibold text-foreground select-none [&>svg]:size-3.5 [&>svg]:text-subtle-foreground\",\r\n        nav: \"absolute inset-x-0 top-0 flex items-center justify-between\",\r\n        button_previous: \"inline-flex size-7 items-center justify-center rounded-md border border-border bg-transparent p-0 text-foreground opacity-50 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-30\",\r\n        button_next: \"inline-flex size-7 items-center justify-center rounded-md border border-border bg-transparent p-0 text-foreground opacity-50 transition-opacity outline-none hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-30\",\r\n        month_grid: \"mt-0 w-full border-collapse\",\r\n        weekdays: \"flex\",\r\n        weekday: \"w-8 flex-1 text-center text-label leading-[17px] font-normal text-subtle-foreground\",\r\n        week: \"mt-2 flex w-full\",\r\n        day: \"relative size-8 flex-1 p-0 text-center text-body\",\r\n        day_button: \"inline-flex size-8 items-center justify-center rounded-md p-0 font-normal outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring\",\r\n        selected: \"[&>button]:bg-primary [&>button]:text-primary-foreground [&>button:hover]:bg-primary\",\r\n        today: \"[&>button:not(:where([class*=bg-primary]))]:bg-accent [&>button]:text-accent-foreground\",\r\n        outside: \"[&>button]:text-muted-foreground\",\r\n        disabled: \"opacity-40\",\r\n        range_start: \"rounded-l-md bg-accent\",\r\n        range_end: \"rounded-r-md bg-accent\",\r\n        range_middle: \"bg-accent [&>button]:rounded-none [&>button]:bg-transparent [&>button]:text-accent-foreground\",\r\n        hidden: \"invisible\",\r\n        ...classNames,\r\n      }}\r\n      formatters={{\r\n        formatMonthDropdown: (m) => labels.calendarMonth(m.getMonth() + 1),\r\n        formatWeekdayName: (d) => labels.calendarWeekday(d.getDay()),\r\n        ...props.formatters,\r\n      }}\r\n      components={{\r\n        Chevron: ({ orientation }) =>\r\n          orientation === \"left\" ? <ChevronLeft className=\"size-4\" /> : orientation === \"right\" ? <ChevronRight className=\"size-4\" /> : <ChevronDown className=\"size-3.5\" />,\r\n      }}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/calendar.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

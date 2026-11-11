@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "UI component: spinner",
+  "dependencies": [
+    "class-variance-authority@^0.7.1",
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · spinner\r\nimport * as React from \"react\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\nimport { LoaderCircle } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport const spinnerVariants = cva(\"shrink-0 animate-spin\", {\r\n  variants: {\r\n    size: { xs: \"size-3\", sm: \"size-4\", md: \"size-5\", lg: \"size-8\", xl: \"size-12\" },\r\n  },\r\n  defaultVariants: { size: \"sm\" },\r\n})\r\n\r\nexport interface SpinnerProps extends Omit<React.ComponentProps<\"svg\">, \"ref\">, VariantProps<typeof spinnerVariants> {\r\n  /** Kích cỡ: xs, sm (mặc định), md, lg, xl. */\r\n  size?: VariantProps<typeof spinnerVariants>[\"size\"]\r\n  /** Nhãn đọc cho trình đọc màn hình (mặc định \"Đang tải\"). @default Đang tải */\r\n  label?: string\r\n}\r\n\r\n/** Biểu tượng đang tải xoay tròn. Màu theo `currentColor`, nên dùng được trong Button. */\r\nexport function Spinner({ className, size, label, ...props }: SpinnerProps) {\r\n  const { labels } = useUiConfig()\r\n  return (\r\n    <LoaderCircle\r\n      data-slot=\"spinner\"\r\n      role=\"status\"\r\n      aria-label={label ?? labels.spinner}\r\n      className={cn(spinnerVariants({ size }), className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/spinner.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

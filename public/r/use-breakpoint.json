@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-breakpoint",
+  "type": "registry:hook",
+  "title": "Hook: use-breakpoint",
+  "files": [
+    {
+      "path": "lib/use-breakpoint.ts",
+      "content": "import * as React from \"react\"\r\n\r\n/** Tên các điểm ngắt responsive (giống Ant Design). */\r\nexport type Breakpoint = \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"\r\n\r\n/** Chiều rộng tối thiểu (px) tại đó mỗi điểm ngắt bắt đầu có hiệu lực: xs 0, sm 576, md 768, lg 992, xl 1200, xxl 1600. */\r\nexport const breakpoints: Record<Breakpoint, number> = { xs: 0, sm: 576, md: 768, lg: 992, xl: 1200, xxl: 1600 }\r\n\r\n/** Thứ tự các điểm ngắt từ nhỏ đến lớn. */\r\nexport const breakpointOrder: Breakpoint[] = [\"xs\", \"sm\", \"md\", \"lg\", \"xl\", \"xxl\"]\r\n\r\nconst none: Record<Breakpoint, boolean> = { xs: false, sm: false, md: false, lg: false, xl: false, xxl: false }\r\n\r\nfunction read(): Record<Breakpoint, boolean> {\r\n  if (typeof window === \"undefined\" || typeof window.matchMedia !== \"function\") return none\r\n  const out = { ...none }\r\n  for (const bp of breakpointOrder) out[bp] = window.matchMedia(`(min-width: ${breakpoints[bp]}px)`).matches\r\n  return out\r\n}\r\n\r\n/**\r\n * Trả về các điểm ngắt đang khớp với cửa sổ (`{ xs: true, sm: true, md: false, ... }`); cập nhật khi đổi kích thước.\r\n * Trên máy chủ và trước khi mount, mọi giá trị là `false`.\r\n */\r\nexport function useBreakpoint(): Record<Breakpoint, boolean> {\r\n  const [screens, setScreens] = React.useState<Record<Breakpoint, boolean>>(none)\r\n  React.useEffect(() => {\r\n    if (typeof window.matchMedia !== \"function\") return\r\n    const update = () => setScreens((prev) => {\r\n      const next = read()\r\n      return breakpointOrder.every((b) => prev[b] === next[b]) ? prev : next\r\n    })\r\n    const lists = breakpointOrder.map((bp) => window.matchMedia(`(min-width: ${breakpoints[bp]}px)`))\r\n    lists.forEach((l) => l.addEventListener(\"change\", update))\r\n    update()\r\n    return () => lists.forEach((l) => l.removeEventListener(\"change\", update))\r\n  }, [])\r\n  return screens\r\n}\r\n",
+      "type": "registry:hook",
+      "target": "lib/use-breakpoint.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

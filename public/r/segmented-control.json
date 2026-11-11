@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "segmented-control",
+  "type": "registry:ui",
+  "title": "UI component: segmented-control",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/segmented-control.tsx",
+      "content": "import * as React from \"react\"\r\nimport { RadioGroup as RadioGroupPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport interface SegmentedControlOption {\r\n  /** Giá trị trả về khi chọn. */\r\n  value: string\r\n  /** Nội dung hiển thị. */\r\n  label: React.ReactNode\r\n  /** Vô hiệu hóa riêng lựa chọn này. */\r\n  disabled?: boolean\r\n}\r\n\r\nexport interface SegmentedControlProps extends Omit<React.ComponentProps<typeof RadioGroupPrimitive.Root>, \"onChange\"> {\r\n  /** Danh sách lựa chọn. */\r\n  options: SegmentedControlOption[]\r\n  /** Kích cỡ: `sm` (32px), `default` (40px), `lg` (44px). @default default */\r\n  size?: \"sm\" | \"default\" | \"lg\"\r\n  /** Cho các lựa chọn chia đều chiều ngang. */\r\n  fullWidth?: boolean\r\n  /** Gọi khi đổi lựa chọn (cùng nghĩa với `onValueChange`). */\r\n  onChange?: (value: string) => void\r\n}\r\n\r\nconst sizes = { sm: \"h-6 px-2.5 text-xs\", default: \"h-7 px-3 text-control\", lg: \"h-8 px-4 text-control\" }\r\n\r\n/** Nhóm nút phân đoạn kiểu iOS, dựa trên ngữ nghĩa radio-group (mũi tên để đổi lựa chọn). Cần `aria-label`. */\r\nexport function SegmentedControl({ options, size: sizeProp, fullWidth, className, onChange, onValueChange, ...props }: SegmentedControlProps) {\r\n  const ui = useUiConfig()\r\n  const size = sizeProp ?? ui.size\r\n  return (\r\n    <RadioGroupPrimitive.Root\r\n      data-slot=\"segmented-control\"\r\n      orientation=\"horizontal\"\r\n      onValueChange={(v) => { onValueChange?.(v); onChange?.(v) }}\r\n      className={cn(\"inline-flex items-center gap-0.5 rounded-lg bg-muted p-1\", fullWidth && \"flex w-full\", className)}\r\n      {...props}\r\n    >\r\n      {options.map((o) => (\r\n        <RadioGroupPrimitive.Item\r\n          key={o.value}\r\n          value={o.value}\r\n          disabled={o.disabled}\r\n          className={cn(\r\n            \"inline-flex items-center justify-center rounded-md font-medium whitespace-nowrap text-muted-foreground transition-[color,background-color,border-color,box-shadow,opacity,transform] outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=checked]:bg-background data-[state=checked]:text-foreground data-[state=checked]:shadow-sm\",\r\n            sizes[size],\r\n            fullWidth && \"flex-1\",\r\n          )}\r\n        >\r\n          {o.label}\r\n        </RadioGroupPrimitive.Item>\r\n      ))}\r\n    </RadioGroupPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/segmented-control.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

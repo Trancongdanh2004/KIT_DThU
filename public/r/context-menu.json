@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "type": "registry:ui",
+  "title": "UI component: context-menu",
+  "dependencies": [
+    "lucide-react@^1.61.0",
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/dropdown-menu-extras.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/context-menu.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · context-menu\r\nimport * as React from \"react\"\r\nimport { ContextMenu as ContextMenuPrimitive } from \"radix-ui\"\r\nimport { Check, ChevronRight, Circle } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { menuStyles } from \"@/components/ui/dropdown-menu-extras\"\r\n\r\n/** Menu chuột phải (nhấn giữ trên cảm ứng). Bọc vùng cần gắn menu bằng `ContextMenuTrigger`. */\r\nexport const ContextMenu = ContextMenuPrimitive.Root\r\nexport const ContextMenuTrigger = ContextMenuPrimitive.Trigger\r\nexport const ContextMenuGroup = ContextMenuPrimitive.Group\r\nexport const ContextMenuSub = ContextMenuPrimitive.Sub\r\nexport const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup\r\n\r\nexport function ContextMenuContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {\r\n  return (\r\n    <ContextMenuPrimitive.Portal>\r\n      <ContextMenuPrimitive.Content data-slot=\"context-menu-content\" className={cn(menuStyles.content, className)} {...props} />\r\n    </ContextMenuPrimitive.Portal>\r\n  )\r\n}\r\nexport function ContextMenuItem({ className, inset, variant, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Item> & {\r\n  inset?: boolean\r\n  /** `destructive` tô đỏ mục nguy hiểm. */\r\n  variant?: \"default\" | \"destructive\"\r\n}) {\r\n  return <ContextMenuPrimitive.Item data-slot=\"context-menu-item\" className={cn(menuStyles.item, inset && \"pl-8\", variant === \"destructive\" && menuStyles.destructive, className)} {...props} />\r\n}\r\nexport function ContextMenuCheckboxItem({ className, children, checked, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>) {\r\n  return (\r\n    <ContextMenuPrimitive.CheckboxItem data-slot=\"context-menu-checkbox-item\" className={cn(menuStyles.checkable, className)} checked={checked} {...props}>\r\n      <span className={menuStyles.indicator}><ContextMenuPrimitive.ItemIndicator><Check /></ContextMenuPrimitive.ItemIndicator></span>\r\n      {children}\r\n    </ContextMenuPrimitive.CheckboxItem>\r\n  )\r\n}\r\nexport function ContextMenuRadioItem({ className, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>) {\r\n  return (\r\n    <ContextMenuPrimitive.RadioItem data-slot=\"context-menu-radio-item\" className={cn(menuStyles.checkable, className)} {...props}>\r\n      <span className={menuStyles.indicator}><ContextMenuPrimitive.ItemIndicator><Circle className=\"size-2 fill-current\" /></ContextMenuPrimitive.ItemIndicator></span>\r\n      {children}\r\n    </ContextMenuPrimitive.RadioItem>\r\n  )\r\n}\r\nexport function ContextMenuLabel({ className, inset, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Label> & { inset?: boolean }) {\r\n  return <ContextMenuPrimitive.Label className={cn(menuStyles.label, inset && \"pl-8\", className)} {...props} />\r\n}\r\nexport function ContextMenuSeparator({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {\r\n  return <ContextMenuPrimitive.Separator className={cn(menuStyles.separator, className)} {...props} />\r\n}\r\nexport function ContextMenuShortcut({ className, ...props }: React.ComponentProps<\"span\">) {\r\n  return <span data-slot=\"context-menu-shortcut\" className={cn(menuStyles.shortcut, className)} {...props} />\r\n}\r\nexport function ContextMenuSubTrigger({ className, inset, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & { inset?: boolean }) {\r\n  return (\r\n    <ContextMenuPrimitive.SubTrigger data-slot=\"context-menu-sub-trigger\" className={cn(menuStyles.item, menuStyles.subTrigger, inset && \"pl-8\", className)} {...props}>\r\n      {children}\r\n      <ChevronRight className=\"ml-auto\" />\r\n    </ContextMenuPrimitive.SubTrigger>\r\n  )\r\n}\r\nexport function ContextMenuSubContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.SubContent>) {\r\n  return (\r\n    <ContextMenuPrimitive.Portal>\r\n      <ContextMenuPrimitive.SubContent data-slot=\"context-menu-sub-content\" className={cn(menuStyles.content, className)} {...props} />\r\n    </ContextMenuPrimitive.Portal>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/context-menu.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

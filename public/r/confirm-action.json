@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "confirm-action",
+  "type": "registry:component",
+  "title": "RIS component: confirm-action",
+  "registryDependencies": [
+    "http://localhost:4300/r/alert-dialog.json",
+    "http://localhost:4300/r/popconfirm.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/ConfirmAction.tsx",
+      "content": "import { cloneElement, useState, type ReactElement, type ReactNode } from \"react\";\r\nimport { ConfirmDialog } from \"@/components/ui/alert-dialog\";\r\nimport { Popconfirm } from \"@/components/ui/popconfirm\";\r\n\r\nexport interface ConfirmActionProps {\r\n  /** Phần tử bấm để hỏi xác nhận (Button…). Một phần tử duy nhất. */\r\n  trigger: ReactElement<{ onClick?: (event: React.MouseEvent<HTMLElement>) => void }>;\r\n  title: ReactNode;\r\n  description?: ReactNode;\r\n  confirmLabel?: string;\r\n  cancelLabel?: string;\r\n  /** Hành động phá huỷ (xoá, khoá…) → nút xác nhận đỏ. */\r\n  destructive?: boolean;\r\n  /** \"dialog\" (mặc định, hộp thoại giữa màn hình) hoặc \"popover\" (hộp nhỏ neo vào nút, cho thao tác nhẹ). */\r\n  mode?: \"dialog\" | \"popover\";\r\n  /** Trả về Promise → hộp giữ mở và hiện loading đến khi xong; Promise lỗi thì giữ mở. */\r\n  onConfirm: () => void | Promise<unknown>;\r\n  disabled?: boolean;\r\n}\r\n\r\n/**\r\n * Hỏi xác nhận trước khi làm việc không hoàn tác được. Thay cho confirm() của trình duyệt và ConfirmDialog cũ.\r\n *\r\n *   <ConfirmAction trigger={<Button variant=\"destructive\">Xoá</Button>}\r\n *     title=\"Xoá bản nháp?\" description=\"Không khôi phục được.\" confirmLabel=\"Xoá\" destructive\r\n *     onConfirm={() => remove.mutateAsync({ id })} />\r\n */\r\nexport function ConfirmAction({\r\n  trigger,\r\n  title,\r\n  description,\r\n  confirmLabel,\r\n  cancelLabel,\r\n  destructive,\r\n  mode = \"dialog\",\r\n  onConfirm,\r\n  disabled,\r\n}: ConfirmActionProps) {\r\n  const [open, setOpen] = useState(false);\r\n\r\n  if (mode === \"popover\") {\r\n    return (\r\n      <Popconfirm\r\n        title={title}\r\n        description={description}\r\n        okText={confirmLabel}\r\n        cancelText={cancelLabel}\r\n        okVariant={destructive ? \"destructive\" : \"default\"}\r\n        onConfirm={onConfirm}\r\n        disabled={disabled}\r\n      >\r\n        {trigger}\r\n      </Popconfirm>\r\n    );\r\n  }\r\n\r\n  const control = cloneElement(trigger, {\r\n    onClick: (event: React.MouseEvent<HTMLElement>) => {\r\n      trigger.props.onClick?.(event);\r\n      if (!event.defaultPrevented && !disabled) setOpen(true);\r\n    },\r\n  });\r\n  return (\r\n    <>\r\n      {control}\r\n      <ConfirmDialog\r\n        open={open}\r\n        onOpenChange={setOpen}\r\n        title={title}\r\n        description={description}\r\n        confirmLabel={confirmLabel}\r\n        cancelLabel={cancelLabel}\r\n        variant={destructive ? \"destructive\" : \"default\"}\r\n        onConfirm={onConfirm}\r\n      />\r\n    </>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/ConfirmAction.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

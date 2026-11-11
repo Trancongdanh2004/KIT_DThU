@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forms",
+  "type": "registry:lib",
+  "title": "Library: forms",
+  "dependencies": [
+    "react-hook-form@^7.91.0",
+    "zod@^4.6.7"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/error-messages.json"
+  ],
+  "files": [
+    {
+      "path": "lib/forms.ts",
+      "content": "import type { FieldValues, Path, UseFormSetError } from \"react-hook-form\";\r\nimport { z } from \"zod\";\r\nimport { errorMessage, fieldErrors } from \"./errorMessages\";\r\n\r\n/**\r\n * Chuyển lỗi ProblemDetails `errors: { field: [msg] }` của API vào react-hook-form.\r\n * Tên trường của API (camelCase, có thể \"contributors[0].roleCode\") được thử khớp với tên trường\r\n * của form; trường không khớp được gom thành câu lỗi chung để hiện ở đầu form.\r\n *\r\n *   const { setError } = form;\r\n *   try { await save(values) } catch (e) { setBanner(applyApiErrors(e, setError)) }\r\n *\r\n * Trả về câu lỗi chung (rỗng nếu mọi lỗi đã gắn được vào ô).\r\n */\r\nexport function applyApiErrors<T extends FieldValues>(\r\n  error: unknown,\r\n  setError: UseFormSetError<T>,\r\n  knownFields?: readonly string[],\r\n): string {\r\n  const byField = fieldErrors(error);\r\n  const known = knownFields ? new Set(knownFields.map((f) => f.toLowerCase())) : null;\r\n  const orphan: string[] = [];\r\n  for (const [rawName, message] of Object.entries(byField)) {\r\n    const name = normalizeFieldName(rawName);\r\n    if (!name || (known && !known.has(name.toLowerCase()))) {\r\n      orphan.push(message);\r\n      continue;\r\n    }\r\n    setError(name as Path<T>, { type: \"server\", message });\r\n  }\r\n  if (orphan.length > 0) return orphan.join(\" \");\r\n  // Không có lỗi theo trường → dùng câu tiếng Việt theo mã lỗi.\r\n  return Object.keys(byField).length === 0 ? errorMessage(error) : \"\";\r\n}\r\n\r\n/** \"Title\" → \"title\"; \"Contributors[0].RoleCode\" → \"contributors.0.roleCode\" (đường dẫn của RHF). */\r\nexport function normalizeFieldName(name: string): string {\r\n  if (!name || name === \"$\") return \"\";\r\n  return name\r\n    .replace(/\\[(\\d+)\\]/g, \".$1\")\r\n    .split(\".\")\r\n    .filter(Boolean)\r\n    .map((part) => (/^\\d+$/.test(part) ? part : part.charAt(0).toLowerCase() + part.slice(1)))\r\n    .join(\".\");\r\n}\r\n\r\n/* ===== zod: câu thông báo tiếng Việt ===== */\r\n\r\nexport const MIN_YEAR = 1975;\r\nexport const MAX_YEAR = 2100;\r\n\r\n/** Chuỗi bắt buộc, đã cắt khoảng trắng: z.object({ title: zRequired(\"Tên công trình\") }) */\r\nexport function zRequired(label = \"Trường này\", max?: number) {\r\n  let s = z.string({ error: `${label} là bắt buộc` }).trim().min(1, `${label} là bắt buộc`);\r\n  if (max) s = s.max(max, `${label} tối đa ${max} ký tự`);\r\n  return s;\r\n}\r\n\r\n/** Email hợp lệ; bắt buộc trừ khi truyền { optional: true } (chuỗi rỗng được chấp nhận). */\r\nexport function zEmail(opts: { optional?: boolean; label?: string } = {}) {\r\n  const label = opts.label ?? \"Email\";\r\n  const email = z.string().trim().pipe(z.email({ error: `${label} chưa đúng định dạng` }));\r\n  if (opts.optional) return z.union([z.literal(\"\"), email]);\r\n  return z.string({ error: `${label} là bắt buộc` }).trim().min(1, `${label} là bắt buộc`).pipe(email);\r\n}\r\n\r\n/** Năm 1975–2100. Nhận số hoặc chuỗi số (ô nhập), trả về number. */\r\nexport function zYear(label = \"Năm\") {\r\n  return z.coerce\r\n    .number({ error: `${label} phải là số` })\r\n    .int(`${label} phải là số nguyên`)\r\n    .min(MIN_YEAR, `${label} từ ${MIN_YEAR} trở đi`)\r\n    .max(MAX_YEAR, `${label} không quá ${MAX_YEAR}`);\r\n}\r\n\r\n/** Năm không bắt buộc: ô trống → undefined. */\r\nexport function zOptionalYear(label = \"Năm\") {\r\n  return z.preprocess((v) => (v === \"\" || v === null ? undefined : v), zYear(label).optional());\r\n}\r\n\r\n/** Số nguyên dương (số trang, tập…); ô trống → undefined. */\r\nexport function zOptionalPositiveInt(label = \"Giá trị\") {\r\n  return z.preprocess(\r\n    (v) => (v === \"\" || v === null ? undefined : v),\r\n    z.coerce\r\n      .number({ error: `${label} phải là số` })\r\n      .int(`${label} phải là số nguyên`)\r\n      .positive(`${label} phải lớn hơn 0`)\r\n      .optional(),\r\n  );\r\n}\r\n\r\n/** Ngày dạng yyyy-MM-dd (giá trị input type=date / API); chuỗi rỗng được chấp nhận khi optional. */\r\nexport function zIsoDate(label = \"Ngày\", opts: { optional?: boolean } = {}) {\r\n  const date = z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/, `${label} chưa đúng định dạng`);\r\n  return opts.optional ? z.union([z.literal(\"\"), date]) : date;\r\n}\r\n",
+      "type": "registry:lib",
+      "target": "lib/forms.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

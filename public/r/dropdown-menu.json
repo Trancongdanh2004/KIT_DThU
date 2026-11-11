@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dropdown-menu",
+  "type": "registry:ui",
+  "title": "UI component: dropdown-menu",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/dropdown-menu-extras.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/dropdown-menu.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · dropdown-menu\r\nimport * as React from \"react\"\r\nimport { DropdownMenu as DropdownMenuPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { menuStyles } from \"@/components/ui/dropdown-menu-extras\"\r\n\r\nexport const DropdownMenu = DropdownMenuPrimitive.Root\r\nexport const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger\r\nexport const DropdownMenuGroup = DropdownMenuPrimitive.Group\r\n\r\n/** Khung menu thả xuống (reference `dtb-rmenu-tam`: bo 10, viền line, đổ bóng). Có thể truyền `align`/`side`. */\r\nexport function DropdownMenuContent({ className, sideOffset = 6, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {\r\n  return (\r\n    <DropdownMenuPrimitive.Portal>\r\n      <DropdownMenuPrimitive.Content\r\n        sideOffset={sideOffset}\r\n        className={cn(menuStyles.content, className)}\r\n        {...props}\r\n      />\r\n    </DropdownMenuPrimitive.Portal>\r\n  )\r\n}\r\n/** Một mục menu; `variant=\"destructive\"` tô đỏ (hành động xóa). */\r\nexport function DropdownMenuItem({ className, inset, variant, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & { inset?: boolean; variant?: \"default\" | \"destructive\" }) {\r\n  return (\r\n    <DropdownMenuPrimitive.Item\r\n      data-slot=\"dropdown-menu-item\"\r\n      className={cn(menuStyles.item, inset && \"pl-8\", variant === \"destructive\" && menuStyles.destructive, className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\nexport function DropdownMenuLabel({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Label>) {\r\n  return <DropdownMenuPrimitive.Label className={cn(menuStyles.label, className)} {...props} />\r\n}\r\nexport function DropdownMenuSeparator({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {\r\n  return <DropdownMenuPrimitive.Separator className={cn(menuStyles.separator, className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/dropdown-menu.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

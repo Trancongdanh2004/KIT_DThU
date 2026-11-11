@@ -1,0 +1,487 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ris-kit",
+  "homepage": "https://github.com/<owner>/ris-kit",
+  "items": [
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "UI component: alert"
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "UI component: alert-dialog"
+    },
+    {
+      "name": "app-css",
+      "type": "registry:style",
+      "title": "Styles: app-css"
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "UI component: avatar"
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "UI component: badge"
+    },
+    {
+      "name": "block-admin",
+      "type": "registry:block",
+      "title": "Block: block-admin"
+    },
+    {
+      "name": "block-app-layout",
+      "type": "registry:block",
+      "title": "Block: block-app-layout"
+    },
+    {
+      "name": "block-archive",
+      "type": "registry:block",
+      "title": "Block: block-archive"
+    },
+    {
+      "name": "block-auth",
+      "type": "registry:block",
+      "title": "Block: block-auth"
+    },
+    {
+      "name": "block-dashboard",
+      "type": "registry:block",
+      "title": "Block: block-dashboard"
+    },
+    {
+      "name": "block-documents",
+      "type": "registry:block",
+      "title": "Block: block-documents"
+    },
+    {
+      "name": "block-faculty",
+      "type": "registry:block",
+      "title": "Block: block-faculty"
+    },
+    {
+      "name": "block-shell",
+      "type": "registry:block",
+      "title": "Block: block-shell"
+    },
+    {
+      "name": "block-system",
+      "type": "registry:block",
+      "title": "Block: block-system"
+    },
+    {
+      "name": "block-work",
+      "type": "registry:block",
+      "title": "Block: block-work"
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "UI component: breadcrumb"
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "UI component: button"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "UI component: calendar"
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "UI component: card"
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "UI component: carousel"
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "UI component: chart"
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "UI component: checkbox"
+    },
+    {
+      "name": "choice-select",
+      "type": "registry:component",
+      "title": "RIS component: choice-select"
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "UI component: combobox"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "UI component: command"
+    },
+    {
+      "name": "confirm-action",
+      "type": "registry:component",
+      "title": "RIS component: confirm-action"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "UI component: context-menu"
+    },
+    {
+      "name": "data-grid",
+      "type": "registry:ui",
+      "title": "UI component: data-grid"
+    },
+    {
+      "name": "data-grid-export",
+      "type": "registry:ui",
+      "title": "UI component: data-grid-export"
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "UI component: date-picker"
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "UI component: description-list"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "UI component: dialog"
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "UI component: drawer"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "UI component: dropdown-menu"
+    },
+    {
+      "name": "dropdown-menu-extras",
+      "type": "registry:ui",
+      "title": "UI component: dropdown-menu-extras"
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "UI component: empty-state"
+    },
+    {
+      "name": "error-messages",
+      "type": "registry:lib",
+      "title": "Library: error-messages"
+    },
+    {
+      "name": "error-view",
+      "type": "registry:component",
+      "title": "RIS component: error-view"
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "UI component: field"
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "title": "UI component: file-upload"
+    },
+    {
+      "name": "filter-bar",
+      "type": "registry:component",
+      "title": "RIS component: filter-bar"
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "UI component: form"
+    },
+    {
+      "name": "forms",
+      "type": "registry:lib",
+      "title": "Library: forms"
+    },
+    {
+      "name": "hint-tooltip",
+      "type": "registry:component",
+      "title": "RIS component: hint-tooltip"
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "UI component: hover-card"
+    },
+    {
+      "name": "initials",
+      "type": "registry:lib",
+      "title": "Library: initials"
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "UI component: input"
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "UI component: input-group"
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "UI component: input-otp"
+    },
+    {
+      "name": "iso-date-picker",
+      "type": "registry:component",
+      "title": "RIS component: iso-date-picker"
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "UI component: kbd"
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "UI component: label"
+    },
+    {
+      "name": "loading-overlay",
+      "type": "registry:ui",
+      "title": "UI component: loading-overlay"
+    },
+    {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "title": "UI component: multi-select"
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "UI component: native-select"
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "UI component: navigation-menu"
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "UI component: number-input"
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "UI component: page-header"
+    },
+    {
+      "name": "page-shell",
+      "type": "registry:component",
+      "title": "RIS component: page-shell"
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "UI component: pagination"
+    },
+    {
+      "name": "popconfirm",
+      "type": "registry:ui",
+      "title": "UI component: popconfirm"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "UI component: popover"
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "UI component: progress"
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "UI component: radio-group"
+    },
+    {
+      "name": "result",
+      "type": "registry:ui",
+      "title": "UI component: result"
+    },
+    {
+      "name": "row-actions",
+      "type": "registry:component",
+      "title": "RIS component: row-actions"
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "UI component: scroll-area"
+    },
+    {
+      "name": "segmented-control",
+      "type": "registry:ui",
+      "title": "UI component: segmented-control"
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "UI component: select"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "UI component: separator"
+    },
+    {
+      "name": "server-data-table",
+      "type": "registry:component",
+      "title": "RIS component: server-data-table"
+    },
+    {
+      "name": "session-taken-over-dialog",
+      "type": "registry:component",
+      "title": "RIS component: session-taken-over-dialog"
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "UI component: sheet"
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "UI component: skeleton"
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "UI component: spinner"
+    },
+    {
+      "name": "stat-tile",
+      "type": "registry:ui",
+      "title": "UI component: stat-tile"
+    },
+    {
+      "name": "stepper",
+      "type": "registry:ui",
+      "title": "UI component: stepper"
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "UI component: switch"
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "UI component: table"
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "UI component: tabs"
+    },
+    {
+      "name": "tag-input",
+      "type": "registry:ui",
+      "title": "UI component: tag-input"
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "UI component: textarea"
+    },
+    {
+      "name": "theme",
+      "type": "registry:style",
+      "title": "Styles: theme"
+    },
+    {
+      "name": "timeline",
+      "type": "registry:ui",
+      "title": "UI component: timeline"
+    },
+    {
+      "name": "toaster",
+      "type": "registry:ui",
+      "title": "UI component: toaster"
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "UI component: tooltip"
+    },
+    {
+      "name": "tree-view",
+      "type": "registry:ui",
+      "title": "UI component: tree-view"
+    },
+    {
+      "name": "ui-config",
+      "type": "registry:lib",
+      "title": "Library: ui-config"
+    },
+    {
+      "name": "unsaved-changes-guard",
+      "type": "registry:component",
+      "title": "RIS component: unsaved-changes-guard"
+    },
+    {
+      "name": "use-breakpoint",
+      "type": "registry:hook",
+      "title": "Hook: use-breakpoint"
+    },
+    {
+      "name": "use-countdown",
+      "type": "registry:hook",
+      "title": "Hook: use-countdown"
+    },
+    {
+      "name": "use-debounced-value",
+      "type": "registry:hook",
+      "title": "Hook: use-debounced-value"
+    },
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "title": "Hook: use-media-query"
+    },
+    {
+      "name": "use-retained",
+      "type": "registry:hook",
+      "title": "Hook: use-retained"
+    },
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Library: utils"
+    },
+    {
+      "name": "all",
+      "type": "registry:block",
+      "title": "Toàn bộ RIS Kit"
+    }
+  ]
+}

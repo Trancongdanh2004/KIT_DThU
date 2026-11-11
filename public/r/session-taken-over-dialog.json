@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "session-taken-over-dialog",
+  "type": "registry:component",
+  "title": "RIS component: session-taken-over-dialog",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/alert-dialog.json",
+    "http://localhost:4300/r/button.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/SessionTakenOverDialog.tsx",
+      "content": "import { LogOut, RefreshCw } from \"lucide-react\";\r\nimport { useState } from \"react\";\r\nimport {\r\n  AlertDialog,\r\n  AlertDialogContent,\r\n  AlertDialogDescription,\r\n  AlertDialogFooter,\r\n  AlertDialogHeader,\r\n  AlertDialogTitle,\r\n} from \"@/components/ui/alert-dialog\";\r\nimport { Button } from \"@/components/ui/button\";\r\n\r\ninterface Props {\r\n  /** Account that signed in from another tab of this browser; null hides the dialog. */\r\n  account: { fullName: string; email: string | null } | null;\r\n  /** Leaves this tab only; the other account's session is kept (see AuthProvider.signOut). */\r\n  onSignOut: () => Promise<void>;\r\n}\r\n\r\n/** Blocks the tab until the user reloads or signs out: the shared cookie now belongs to another account. */\r\nexport function SessionTakenOverDialog({ account, onSignOut }: Props) {\r\n  const [signingOut, setSigningOut] = useState(false);\r\n\r\n  const signOut = async () => {\r\n    setSigningOut(true);\r\n    await onSignOut();\r\n  };\r\n\r\n  return (\r\n    // No onOpenChange: Escape and outside clicks must not dismiss it.\r\n    <AlertDialog open={account !== null}>\r\n      <AlertDialogContent onEscapeKeyDown={(e) => e.preventDefault()}>\r\n        <AlertDialogHeader>\r\n          <AlertDialogTitle>Đã có tài khoản khác đăng nhập</AlertDialogTitle>\r\n          <AlertDialogDescription>\r\n            Hiện đã có tài khoản <strong>{account?.fullName}</strong>\r\n            {account?.email ? ` (${account.email})` : \"\"} đăng nhập vào hệ thống trên trình duyệt này. Vui lòng nhấn F5 để\r\n            tải lại trang theo tài khoản mới, hoặc đăng xuất tài khoản hiện tại khỏi tab này (tài khoản{\" \"}\r\n            {account?.fullName} vẫn giữ đăng nhập ở tab khác).\r\n          </AlertDialogDescription>\r\n        </AlertDialogHeader>\r\n        <AlertDialogFooter>\r\n          <Button variant=\"outline\" disabled={signingOut} onClick={() => void signOut()}>\r\n            <LogOut /> Đăng xuất\r\n          </Button>\r\n          <Button disabled={signingOut} onClick={() => window.location.reload()}>\r\n            <RefreshCw /> Tải lại trang (F5)\r\n          </Button>\r\n        </AlertDialogFooter>\r\n      </AlertDialogContent>\r\n    </AlertDialog>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/SessionTakenOverDialog.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

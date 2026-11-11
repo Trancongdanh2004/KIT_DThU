@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "utils",
+  "type": "registry:lib",
+  "title": "Library: utils",
+  "dependencies": [
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.7.0"
+  ],
+  "files": [
+    {
+      "path": "lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\r\nimport { extendTailwindMerge } from \"tailwind-merge\"\r\n\r\n/* Z-index layers (`z-chrome` … `z-tooltip`) are declared in theme.css; font-size tokens too.\r\n * Font-size tokens declared in packages/tokens/src/theme.css (`--text-*`). Registered so twMerge\r\n * treats `text-body` as a size (not a colour) and keeps `text-foreground` alongside it. Focus shadows (`shadow-focus*`)\r\n * are registered as shadows so `focus-visible:shadow-none` can override them. */\r\nconst twMerge = extendTailwindMerge({\r\n  extend: {\r\n    classGroups: {\r\n      z: [{ z: [\"chrome\", \"chrome-top\", \"fixed\", \"overlay\", \"tooltip\"] }],\r\n      shadow: [{ shadow: [\"focus\", \"focus-soft\", \"focus-soft-danger\"] }],\r\n      \"font-size\": [{ text: [\"micro\", \"tiny\", \"caption\", \"label\", \"meta\", \"small\", \"body\", \"control\", \"base\", \"emph\", \"lead\", \"title\", \"heading\", \"display\"] }],\r\n    },\r\n  },\r\n})\r\n\r\nexport function cn(...inputs: ClassValue[]) {\r\n  return twMerge(clsx(inputs))\r\n}\r\n",
+      "type": "registry:lib",
+      "target": "lib/utils.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-media-query",
+  "type": "registry:hook",
+  "title": "Hook: use-media-query",
+  "files": [
+    {
+      "path": "lib/use-media-query.ts",
+      "content": "import * as React from \"react\"\r\n\r\n/** Subscribes to a CSS media query. Returns `defaultValue` on the server and before mount. */\r\nexport function useMediaQuery(query: string, defaultValue = false): boolean {\r\n  const subscribe = React.useCallback((cb: () => void) => {\r\n    const mql = window.matchMedia(query)\r\n    mql.addEventListener(\"change\", cb)\r\n    return () => mql.removeEventListener(\"change\", cb)\r\n  }, [query])\r\n  return React.useSyncExternalStore(\r\n    subscribe,\r\n    () => window.matchMedia(query).matches,\r\n    () => defaultValue,\r\n  )\r\n}\r\n",
+      "type": "registry:hook",
+      "target": "lib/use-media-query.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

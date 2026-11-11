@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-shell",
+  "type": "registry:component",
+  "title": "RIS component: page-shell",
+  "registryDependencies": [
+    "http://localhost:4300/r/block-shell.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/PageShell.tsx",
+      "content": "import type { ReactNode } from \"react\";\r\nimport { PageHead } from \"@/components/blocks/shell\";\r\nimport { cn } from \"@/lib/utils\";\r\n\r\nexport interface PageShellProps {\r\n  /** `head` (mặc định): có thẻ PageHead — trang form/chi tiết. `list`: màn danh sách của kit, không thẻ đầu trang (tên trang đã nằm ở thanh trên/tab; h1 ẩn do InternalLayout cấp). */\r\n  variant?: \"head\" | \"list\";\r\n  /** Bắt buộc với `head`; `list` bỏ qua. */\r\n  title?: ReactNode;\r\n  description?: ReactNode;\r\n  /** Nút hành động góc phải của đầu trang. */\r\n  actions?: ReactNode;\r\n  /** Nội dung đặt trước tiêu đề (nút quay lại…). */\r\n  leading?: ReactNode;\r\n  className?: string;\r\n  children: ReactNode;\r\n}\r\n\r\n/**\r\n * Khung chuẩn của trang khu nội bộ theo kiểu màn danh sách của DThU Kit: PageHead (viền, tiêu đề, ghi chú, hành động)\r\n * rồi các khối nội dung cách nhau 6px. `h1` ẩn của trang do InternalLayout cấp; PageHead là tiêu đề nhìn thấy (h2).\r\n * `variant=\"list\"` bỏ PageHead như màn danh sách của kit: nút hành động chuyển vào thanh công cụ của danh sách.\r\n * Trang có bảng: để `DataTable`/`ServerDataTable` là khối cuối để nó giãn hết chiều cao còn lại.\r\n */\r\nexport function PageShell({ variant = \"head\", title, description, actions, leading, className, children }: PageShellProps) {\r\n  return (\r\n    <div className={cn(\"flex min-w-0 flex-col gap-1.5\", variant === \"list\" ? \"h-full min-h-[32rem] *:shrink-0\" : \"min-h-full\", className)}>\r\n      {variant === \"head\" && <PageHead title={title} description={description} actions={actions} leading={leading} />}\r\n      {children}\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/PageShell.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

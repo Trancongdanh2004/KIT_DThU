@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-retained",
+  "type": "registry:hook",
+  "title": "Hook: use-retained",
+  "files": [
+    {
+      "path": "lib/use-retained.ts",
+      "content": "import * as React from \"react\"\r\n\r\n/**\r\n * Keeps showing the last value seen while `active`, so an overlay keeps its content during its exit animation.\r\n * Overlays are often driven by `open={!!item}`; clearing `item` on close would empty the dialog at once and it would look\r\n * like it closed instantly. `useRetained(item)` keeps the last non-empty item; `useRetained(value, open)` freezes any prop\r\n * while the overlay is closed. Pass a value that keeps its identity between renders (a prop or state, not an inline object).\r\n */\r\nexport function useRetained<T>(value: T, active: boolean = value != null): T {\r\n  const [kept, setKept] = React.useState(value)\r\n  if (active && !Object.is(kept, value)) setKept(value)\r\n  return active ? value : kept\r\n}\r\n",
+      "type": "registry:hook",
+      "target": "lib/use-retained.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

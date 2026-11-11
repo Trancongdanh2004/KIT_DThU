@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stat-tile",
+  "type": "registry:ui",
+  "title": "UI component: stat-tile",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/skeleton.json",
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/stat-tile.tsx",
+      "content": "import * as React from \"react\"\r\nimport { ArrowDownRight, ArrowUpRight, Minus } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { Skeleton } from \"@/components/ui/skeleton\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport interface StatTileProps extends Omit<React.ComponentProps<\"div\">, \"title\"> {\r\n  /** Tên chỉ số (KPI). */\r\n  label: React.ReactNode\r\n  /** Giá trị chính, đã định dạng. */\r\n  value: React.ReactNode\r\n  /** Mức thay đổi (số, ví dụ 12.5 nghĩa là +12,5%). Dấu quyết định mũi tên. */\r\n  delta?: number\r\n  /** Chuỗi hiển thị cho delta; mặc định tự định dạng phần trăm. */\r\n  deltaText?: React.ReactNode\r\n  /** Mô tả kèm delta, ví dụ \"so với tháng trước\". */\r\n  deltaLabel?: React.ReactNode\r\n  /** Hướng nào là tốt: \"up\" (tăng là tốt, mặc định) hoặc \"down\" (giảm là tốt, ví dụ văn bản quá hạn). */\r\n  goodDirection?: \"up\" | \"down\"\r\n  /** Biểu tượng góc phải. */\r\n  icon?: React.ReactNode\r\n  /** Vùng cho sparkline / biểu đồ nhỏ (thường là `<Sparkline />`). */\r\n  sparkline?: React.ReactNode\r\n  /** Hiển thị khung chờ. */\r\n  loading?: boolean\r\n}\r\n\r\n/** Ô chỉ số KPI: nhãn, giá trị lớn, xu hướng (mũi tên + màu theo hướng tốt/xấu) và vùng sparkline. */\r\nexport function StatTile({ label, value, delta, deltaText, deltaLabel, goodDirection = \"up\", icon, sparkline, loading = false, className, ...props }: StatTileProps) {\r\n  const { locale, labels } = useUiConfig()\r\n  const dir = delta === undefined || delta === 0 ? \"flat\" : delta > 0 ? \"up\" : \"down\"\r\n  const tone = dir === \"flat\" ? \"text-muted-foreground\" : dir === goodDirection ? \"text-success\" : \"text-destructive\"\r\n  const Arrow = dir === \"up\" ? ArrowUpRight : dir === \"down\" ? ArrowDownRight : Minus\r\n  const text = deltaText ?? (delta === undefined ? null : `${delta > 0 ? \"+\" : \"\"}${delta.toLocaleString(locale, { maximumFractionDigits: 1 })}%`)\r\n  return (\r\n    <div data-slot=\"stat-tile\" aria-busy={loading || undefined} className={cn(\"flex min-w-0 flex-col items-start rounded-xl border border-[color-mix(in_srgb,var(--border)_67%,var(--card))] bg-card px-4 pt-[15px] pb-3.5 text-card-foreground shadow-[0_1px_2px_#2323380d,0_4px_16px_#2323380f]\", className)} {...props}>\r\n      <div className=\"flex w-full items-start justify-between gap-2\">\r\n        <div className=\"text-label font-semibold text-[color-mix(in_srgb,var(--subtle-foreground)_70%,var(--muted-foreground))]\">{label}</div>\r\n        {icon && <div aria-hidden className=\"flex size-8 shrink-0 items-center justify-center rounded-md bg-accent text-primary [&_svg]:size-4\">{icon}</div>}\r\n      </div>\r\n      {loading ? <Skeleton className=\"mt-1.5 h-8 w-24\" /> : <div className=\"mt-1.5 text-display leading-[1.05] font-bold tracking-[-0.035em] tabular-nums\">{value}</div>}\r\n      <div className=\"mt-[3px] flex w-full items-end justify-between gap-3\">\r\n        {loading ? <Skeleton className=\"h-4 w-28\" /> : text !== null ? (\r\n          <div className=\"flex min-w-0 flex-wrap items-center gap-x-1.5 text-label\">\r\n            <span className={cn(\"inline-flex items-center gap-0.5 font-medium\", tone)}>\r\n              <Arrow aria-hidden className=\"size-3.5\" />\r\n              <span className=\"sr-only\">{`${dir === \"up\" ? labels.trendUp : dir === \"down\" ? labels.trendDown : labels.trendFlat} `}</span>\r\n              {text}\r\n            </span>\r\n            {deltaLabel && <span className=\"text-muted-foreground\">{deltaLabel}</span>}\r\n          </div>\r\n        ) : <span />}\r\n        {sparkline && !loading && <div className=\"shrink-0\">{sparkline}</div>}\r\n      </div>\r\n    </div>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/stat-tile.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "form",
+  "type": "registry:ui",
+  "title": "UI component: form",
+  "dependencies": [
+    "radix-ui@^1.8.1",
+    "react-hook-form@^7.91.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/label.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/form.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · form\r\nimport * as React from \"react\"\r\nimport { Slot } from \"radix-ui\"\r\nimport {\r\n  Controller,\r\n  FormProvider,\r\n  useFormContext,\r\n  useFormState,\r\n  type ControllerProps,\r\n  type FieldPath,\r\n  type FieldValues,\r\n} from \"react-hook-form\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { Label } from \"@/components/ui/label\"\r\n\r\n/**\r\n * Bọc `react-hook-form` (FormProvider). Dùng `useForm({ resolver: zodResolver(schema) })` rồi truyền kết quả qua `{...form}`.\r\n * Khi submit lỗi, ô lỗi đầu tiên tự nhận focus (shouldFocusError của react-hook-form).\r\n */\r\nexport const Form = FormProvider\r\n\r\ninterface FormFieldContextValue<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> {\r\n  name: TName\r\n}\r\nconst FormFieldContext = React.createContext<FormFieldContextValue | null>(null)\r\nconst FormItemContext = React.createContext<{ id: string } | null>(null)\r\n\r\n/** Liên kết một trường với react-hook-form (bọc `Controller`). Dùng `render={({ field }) => ...}`. */\r\nexport function FormField<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(\r\n  props: ControllerProps<TFieldValues, TName>,\r\n) {\r\n  return (\r\n    <FormFieldContext.Provider value={{ name: props.name }}>\r\n      <Controller {...props} />\r\n    </FormFieldContext.Provider>\r\n  )\r\n}\r\n\r\n/** Trả về id, trạng thái lỗi và các id liên kết (nhãn, mô tả, thông báo) của trường hiện tại. Chỉ dùng trong FormField. */\r\nexport function useFormField() {\r\n  const fieldContext = React.useContext(FormFieldContext)\r\n  const itemContext = React.useContext(FormItemContext)\r\n  const { getFieldState } = useFormContext()\r\n  const formState = useFormState({ name: fieldContext?.name })\r\n  if (!fieldContext) throw new Error(\"useFormField phải được dùng bên trong <FormField>\")\r\n  const fieldState = getFieldState(fieldContext.name, formState)\r\n  const id = itemContext?.id ?? \"\"\r\n  return {\r\n    id,\r\n    name: fieldContext.name,\r\n    formItemId: `${id}-form-item`,\r\n    formDescriptionId: `${id}-form-item-description`,\r\n    formMessageId: `${id}-form-item-message`,\r\n    ...fieldState,\r\n  }\r\n}\r\n\r\n/** Khối một trường (nhãn + điều khiển + mô tả + lỗi); tạo id dùng chung cho aria. */\r\nexport function FormItem({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  const id = React.useId()\r\n  return (\r\n    <FormItemContext.Provider value={{ id }}>\r\n      <div data-slot=\"form-item\" className={cn(\"grid gap-[5px]\", className)} {...props} />\r\n    </FormItemContext.Provider>\r\n  )\r\n}\r\n\r\n/** Nhãn của trường, tự gắn `htmlFor` và đổi màu khi lỗi. */\r\nexport function FormLabel({ className, ...props }: React.ComponentProps<typeof Label>) {\r\n  const { error, formItemId } = useFormField()\r\n  return <Label data-slot=\"form-label\" data-error={!!error} className={cn(\"data-[error=true]:text-destructive\", className)} htmlFor={formItemId} {...props} />\r\n}\r\n\r\n/** Bọc điều khiển (Input, Select...), tự gắn id, `aria-invalid` và `aria-describedby`. */\r\nexport function FormControl(props: React.ComponentProps<typeof Slot.Root>) {\r\n  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()\r\n  return (\r\n    <Slot.Root\r\n      data-slot=\"form-control\"\r\n      id={formItemId}\r\n      aria-describedby={error ? `${formDescriptionId} ${formMessageId}` : formDescriptionId}\r\n      aria-invalid={!!error}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\n/** Mô tả phụ cho trường. */\r\nexport function FormDescription({ className, ...props }: React.ComponentProps<\"p\">) {\r\n  const { formDescriptionId } = useFormField()\r\n  return <p data-slot=\"form-description\" id={formDescriptionId} className={cn(\"text-label leading-[1.45] text-subtle-foreground\", className)} {...props} />\r\n}\r\n\r\n/** Hiện thông báo lỗi của trường (từ resolver). Có thể truyền `children` để thay nội dung khi không có lỗi. */\r\nexport function FormMessage({ className, children, ...props }: React.ComponentProps<\"p\">) {\r\n  const { error, formMessageId } = useFormField()\r\n  const body = error ? String(error.message ?? \"\") : children\r\n  if (!body) return null\r\n  return (\r\n    <p data-slot=\"form-message\" id={formMessageId} role={error ? \"alert\" : undefined} className={cn(\"text-label leading-[1.45] text-destructive\", className)} {...props}>\r\n      {body}\r\n    </p>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/form.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

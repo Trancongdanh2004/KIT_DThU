@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "UI component: radio-group",
+  "dependencies": [
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "content": "import * as React from \"react\"\r\nimport { RadioGroup as RadioGroupPrimitive } from \"radix-ui\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\nexport function RadioGroup({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {\r\n  return <RadioGroupPrimitive.Root className={cn(\"grid gap-0.5\", className)} {...props} />\r\n}\r\n\r\n/*\r\n * 1:1 with the reference `do-radio__muc .o`: 16px circle, 1px line border, checked = primary fill with a 6px white dot,\r\n * hover (unchecked) = line-hard border, focus = primary border + 3px ring (primary @ 12%), disabled = 55% opacity.\r\n */\r\nexport function RadioGroupItem({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {\r\n  return (\r\n    <RadioGroupPrimitive.Item\r\n      className={cn(\r\n        \"relative inline-flex aspect-square size-4 shrink-0 cursor-pointer items-center justify-center rounded-full border border-input bg-background p-0 transition-[background-color,border-color,box-shadow] duration-[120ms] outline-none after:absolute after:-inset-2.5 after:content-[''] md:after:-inset-1 hover:data-[state=unchecked]:border-muted-foreground focus-visible:border-primary focus-visible:shadow-focus disabled:cursor-default disabled:opacity-55 data-[state=checked]:border-primary data-[state=checked]:bg-primary\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    >\r\n      <RadioGroupPrimitive.Indicator className=\"flex items-center justify-center\"><span className=\"block size-1.5 rounded-full bg-background\" /></RadioGroupPrimitive.Indicator>\r\n    </RadioGroupPrimitive.Item>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

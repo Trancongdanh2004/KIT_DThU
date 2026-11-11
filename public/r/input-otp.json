@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input-otp",
+  "type": "registry:ui",
+  "title": "UI component: input-otp",
+  "dependencies": [
+    "input-otp@^1.5.0",
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/input-otp.tsx",
+      "content": "import * as React from \"react\"\r\nimport { OTPInput, OTPInputContext } from \"input-otp\"\r\nimport { Minus } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** Ô nhập mã OTP. Dùng cùng `InputOTPGroup`, `InputOTPSlot`, `InputOTPSeparator`. `maxLength` là số ký tự, `onComplete` gọi khi nhập đủ. */\r\nexport function InputOTP({ className, containerClassName, ...props }: React.ComponentProps<typeof OTPInput>) {\r\n  return (\r\n    <OTPInput\r\n      data-slot=\"input-otp\"\r\n      containerClassName={cn(\"flex items-center gap-2 has-[:disabled]:opacity-50\", containerClassName)}\r\n      className={cn(\"disabled:cursor-not-allowed\", className)}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\n/** Nhóm các ô liền nhau. */\r\nexport function InputOTPGroup({ className, ...props }: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"input-otp-group\" className={cn(\"flex items-center\", className)} {...props} />\r\n}\r\n\r\n/** Một ô ký tự; `index` là vị trí trong mã. */\r\nexport function InputOTPSlot({ index, className, ...props }: React.ComponentProps<\"div\"> & { index: number }) {\r\n  const ctx = React.useContext(OTPInputContext)\r\n  const { char, hasFakeCaret, isActive } = ctx.slots[index] ?? {}\r\n  return (\r\n    <div\r\n      data-slot=\"input-otp-slot\"\r\n      data-active={isActive}\r\n      className={cn(\r\n        \"relative flex size-9 items-center justify-center border-y border-r border-field-border bg-background text-control font-medium shadow-xs transition-[color,background-color,border-color,box-shadow] duration-150 ease-out motion-reduce:transition-none first:rounded-l-md first:border-l last:rounded-r-md data-[active=true]:z-10 data-[active=true]:border-primary data-[active=true]:shadow-focus-soft\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    >\r\n      {char}\r\n      {hasFakeCaret && (\r\n        <div className=\"pointer-events-none absolute inset-0 flex items-center justify-center\">\r\n          <div className=\"h-4 w-px animate-pulse bg-foreground\" />\r\n        </div>\r\n      )}\r\n    </div>\r\n  )\r\n}\r\n\r\n/** Dấu ngăn cách giữa hai nhóm. */\r\nexport function InputOTPSeparator(props: React.ComponentProps<\"div\">) {\r\n  return <div data-slot=\"input-otp-separator\" role=\"separator\" {...props}><Minus className=\"size-4 text-muted-foreground\" /></div>\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/input-otp.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

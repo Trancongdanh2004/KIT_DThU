@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "title": "UI component: breadcrumb",
+  "dependencies": [
+    "lucide-react@^1.61.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/ui-config.json",
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/breadcrumb.tsx",
+      "content": "import * as React from \"react\"\r\nimport { ChevronRight } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\nimport { useUiConfig } from \"@/lib/ui-config\"\r\n\r\nexport interface BreadcrumbItem { label: React.ReactNode; href?: string }\r\n\r\nexport function Breadcrumb({ items, className, ...props }: { items: BreadcrumbItem[] } & React.ComponentProps<\"nav\">) {\r\n  const { labels } = useUiConfig()\r\n  return (\r\n    <nav aria-label={labels.breadcrumb} className={cn(\"flex items-center gap-1 text-sm text-muted-foreground\", className)} {...props}>\r\n      {items.map((it, i) => (\r\n        <React.Fragment key={i}>\r\n          {i > 0 && <ChevronRight className=\"size-3.5\" />}\r\n          {it.href && i < items.length - 1 ? <a href={it.href} className=\"hover:text-foreground\">{it.label}</a> : <span className={i === items.length - 1 ? \"text-foreground\" : undefined} aria-current={i === items.length - 1 ? \"page\" : undefined}>{it.label}</span>}\r\n        </React.Fragment>\r\n      ))}\r\n    </nav>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/breadcrumb.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

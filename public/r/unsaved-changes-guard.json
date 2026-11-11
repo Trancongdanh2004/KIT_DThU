@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "unsaved-changes-guard",
+  "type": "registry:component",
+  "title": "RIS component: unsaved-changes-guard",
+  "dependencies": [
+    "react-router@^7.1.0"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/alert-dialog.json"
+  ],
+  "files": [
+    {
+      "path": "components/app/UnsavedChangesGuard.tsx",
+      "content": "import { useEffect } from \"react\";\r\nimport { useBlocker } from \"react-router\";\r\nimport { ConfirmDialog } from \"@/components/ui/alert-dialog\";\r\n\r\n/**\r\n * Hỏi lại khi rời trang (đổi route hoặc đóng tab) lúc còn thay đổi chưa lưu.\r\n * `isDirty` được gọi tại thời điểm rời đi nên luôn đọc trạng thái mới nhất, không cần render lại.\r\n */\r\nexport function UnsavedChangesGuard({ isDirty }: { isDirty: () => boolean }) {\r\n  const blocker = useBlocker(({ currentLocation, nextLocation }) => currentLocation.pathname !== nextLocation.pathname && isDirty());\r\n\r\n  useEffect(() => {\r\n    const onBeforeUnload = (event: BeforeUnloadEvent) => {\r\n      if (!isDirty()) return;\r\n      event.preventDefault();\r\n      event.returnValue = \"\";\r\n    };\r\n    window.addEventListener(\"beforeunload\", onBeforeUnload);\r\n    return () => window.removeEventListener(\"beforeunload\", onBeforeUnload);\r\n  }, [isDirty]);\r\n\r\n  return (\r\n    <ConfirmDialog\r\n      open={blocker.state === \"blocked\"}\r\n      onOpenChange={(open) => {\r\n        if (!open && blocker.state === \"blocked\") blocker.reset();\r\n      }}\r\n      title=\"Rời trang?\"\r\n      description=\"Thay đổi chưa lưu sẽ mất.\"\r\n      confirmLabel=\"Rời trang\"\r\n      cancelLabel=\"Ở lại\"\r\n      variant=\"destructive\"\r\n      onConfirm={() => {\r\n        if (blocker.state === \"blocked\") blocker.proceed();\r\n      }}\r\n    />\r\n  );\r\n}\r\n",
+      "type": "registry:component",
+      "target": "components/app/UnsavedChangesGuard.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

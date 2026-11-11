@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "initials",
+  "type": "registry:lib",
+  "title": "Library: initials",
+  "files": [
+    {
+      "path": "lib/initials.ts",
+      "content": "/**\r\n * Avatar initials: first letter of each of the last two words, ignoring anything in parentheses\r\n * and tokens without letters (\"-\", \"&\"). \"Nguyễn Văn Anh\" → \"VA\", \"Quản trị viên (đủ mọi quyền)\" → \"TV\".\r\n */\r\nexport function initialsOf(name: string | null | undefined): string {\r\n  const words = (name ?? \"\")\r\n    .replace(/\\([^()]*\\)/g, \" \")\r\n    .split(/\\s+/)\r\n    .filter((w) => /\\p{L}/u.test(w));\r\n  const letters = words.slice(-2).map((w) => w.match(/\\p{L}/u)?.[0] ?? \"\");\r\n  return letters.join(\"\").toLocaleUpperCase(\"vi\") || \"?\";\r\n}\r\n",
+      "type": "registry:lib",
+      "target": "lib/initials.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "title": "UI component: checkbox",
+  "dependencies": [
+    "lucide-react@^1.61.0",
+    "radix-ui@^1.8.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/checkbox.tsx",
+      "content": "\"use client\"\r\n\r\n// @dthu/ui 0.2.0 · checkbox\r\nimport * as React from \"react\"\r\nimport { Checkbox as CheckboxPrimitive } from \"radix-ui\"\r\nimport { Check, Minus } from \"lucide-react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/*\r\n * 1:1 with the reference `do-check .o`: 16x16, radius 3, 1px line border, white fill; checked/indeterminate = primary fill\r\n * with a white tick; hover (unchecked) = line-hard border; focus = primary border + 3px ring (primary @ 12%); disabled = 55% opacity.\r\n */\r\nexport function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {\r\n  return (\r\n    <CheckboxPrimitive.Root\r\n      data-slot=\"checkbox\"\r\n      className={cn(\r\n        \"peer relative inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[3px] border border-input bg-background p-0 text-primary-foreground transition-[background-color,border-color,box-shadow] duration-[120ms] outline-none after:absolute after:-inset-2.5 after:content-[''] md:after:-inset-1 hover:data-[state=unchecked]:border-muted-foreground focus-visible:border-primary focus-visible:shadow-focus disabled:cursor-default disabled:opacity-55 data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=indeterminate]:border-primary data-[state=indeterminate]:bg-primary aria-invalid:border-destructive\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    >\r\n      <CheckboxPrimitive.Indicator className=\"flex items-center justify-center\">\r\n        {props.checked === \"indeterminate\" ? <Minus className=\"size-3\" strokeWidth={3} /> : <Check className=\"size-3\" strokeWidth={3} />}\r\n      </CheckboxPrimitive.Indicator>\r\n    </CheckboxPrimitive.Root>\r\n  )\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/checkbox.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

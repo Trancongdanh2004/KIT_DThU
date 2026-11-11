@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "UI component: kbd",
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/kbd.tsx",
+      "content": "import * as React from \"react\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/** Phím bàn phím dạng chip (reference `.dtb-tsearch kbd`: 11px mono, surface-2, 1px border, 4px radius), ví dụ `<Kbd>/</Kbd>`. */\r\nexport function Kbd({ className, ...props }: React.ComponentProps<\"kbd\">) {\r\n  return (\r\n    <kbd\r\n      data-slot=\"kbd\"\r\n      className={cn(\r\n        \"pointer-events-none inline-flex h-[19px] min-w-[19px] select-none items-center justify-center gap-1 rounded-sm border bg-secondary px-[5px] font-mono text-caption font-normal text-subtle-foreground [&_svg]:size-3\",\r\n        className,\r\n      )}\r\n      {...props}\r\n    />\r\n  )\r\n}\r\n\r\n/** Nhóm nhiều phím liền nhau (tổ hợp phím), ví dụ Ctrl + K. */\r\nexport function KbdGroup({ className, ...props }: React.ComponentProps<\"span\">) {\r\n  return <span data-slot=\"kbd-group\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/kbd.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "UI component: badge",
+  "dependencies": [
+    "class-variance-authority@^0.7.1"
+  ],
+  "registryDependencies": [
+    "http://localhost:4300/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "components/ui/badge.tsx",
+      "content": "import * as React from \"react\"\r\nimport { cva, type VariantProps } from \"class-variance-authority\"\r\nimport { cn } from \"@/lib/utils\"\r\n\r\n/**\r\n * Reference `dtb-pill`: 11.5px / 600, 3px 10px padding, 1px transparent border, 6px gap, 0.01em tracking.\r\n * Soft backgrounds are the reference's `*-bg` tokens (≈10% of the tone over the surface); ink-100 = border at 58% over card.\r\n */\r\nexport const badgeVariants = cva(\r\n  \"inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-[3px] text-label leading-[1.45] font-semibold tracking-[0.01em] whitespace-nowrap [&>svg]:size-3\",\r\n  {\r\n    variants: {\r\n      variant: {\r\n        default: \"border-transparent bg-primary text-primary-foreground\",\r\n        // dtb-pill (neutral): ink-100 bg, ink-700 text\r\n        secondary: \"border-transparent bg-[color-mix(in_srgb,var(--border)_58%,var(--card))] text-[color-mix(in_srgb,var(--foreground)_55%,var(--muted-foreground))]\",\r\n        // dtb-pill-outline\r\n        outline: \"border-border-strong bg-transparent text-[color-mix(in_srgb,var(--foreground)_55%,var(--muted-foreground))]\",\r\n        destructive: \"border-transparent bg-destructive/10 text-destructive\",\r\n        warning: \"border-transparent bg-warning/10 text-warning\",\r\n        success: \"border-transparent bg-success/10 text-success\",\r\n        // dtb-pill-blue: accent-soft bg, accent-strong text\r\n        info: \"border-transparent bg-accent text-accent-foreground\",\r\n        // dtb-pill-violet\r\n        violet: \"border-transparent bg-[#ece7f8] text-[#4b3a8c] dark:bg-[#2a2347] dark:text-[#c9bdf0]\",\r\n      },\r\n      dot: { true: \"before:size-1.5 before:shrink-0 before:rounded-full before:bg-current before:content-['']\", false: \"\" },\r\n    },\r\n    defaultVariants: { variant: \"default\", dot: false },\r\n  },\r\n)\r\n\r\n/** Nhãn trạng thái. `variant`: default, secondary, outline, destructive, warning, success, info, violet; `dot` thêm chấm tròn đầu nhãn (dtb-pill-dot). */\r\nexport function Badge({ className, variant, dot, ...props }: React.ComponentProps<\"span\"> & VariantProps<typeof badgeVariants>) {\r\n  return <span data-slot=\"badge\" className={cn(badgeVariants({ variant, dot }), className)} {...props} />\r\n}\r\n",
+      "type": "registry:ui",
+      "target": "components/ui/badge.tsx"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}

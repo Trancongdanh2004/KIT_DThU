@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-debounced-value",
+  "type": "registry:hook",
+  "title": "Hook: use-debounced-value",
+  "files": [
+    {
+      "path": "hooks/useDebouncedValue.ts",
+      "content": "import { useEffect, useState } from \"react\";\r\n\r\n/** Trì hoãn giá trị (ô tìm kiếm) để không gọi API mỗi phím gõ. */\r\nexport function useDebouncedValue<T>(value: T, delayMs = 300): T {\r\n  const [debounced, setDebounced] = useState(value);\r\n  useEffect(() => {\r\n    const id = setTimeout(() => setDebounced(value), delayMs);\r\n    return () => clearTimeout(id);\r\n  }, [value, delayMs]);\r\n  return debounced;\r\n}\r\n",
+      "type": "registry:hook",
+      "target": "hooks/useDebouncedValue.ts"
+    }
+  ],
+  "meta": {
+    "version": "1.0.0"
+  }
+}
